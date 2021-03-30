@@ -1,0 +1,245 @@
+{
+  "contractName": "ERC165MissingData",
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "bytes4",
+          "name": "interfaceId",
+          "type": "bytes4"
+        }
+      ],
+      "name": "supportsInterface",
+      "outputs": [],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.8.0+commit.c7dfd78e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"internalType\":\"bytes4\",\"name\":\"interfaceId\",\"type\":\"bytes4\"}],\"name\":\"supportsInterface\",\"outputs\":[],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"/E/work/\\u5de5\\u4f5c/czz/\\u5408\\u7ea6/truffle/safebox/contracts/openzeppelin/contracts/mocks/ERC165/ERC165MissingData.sol\":\"ERC165MissingData\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/E/work/\\u5de5\\u4f5c/czz/\\u5408\\u7ea6/truffle/safebox/contracts/openzeppelin/contracts/mocks/ERC165/ERC165MissingData.sol\":{\"keccak256\":\"0xa797e082e132df753e2c4ed517dc9a60004083f696b7e7fe16a1a2ff66e3e72e\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://5682856cefe42b5eefd8214dbae515a8f391c9c7f226e85e71d1bc1f5ea71859\",\"dweb:/ipfs/QmeZvjSHjFy6B1V8Lpu9CaW2iXujvoqZ5qYBK1c6HjHL4q\"]}},\"version\":1}",
+  "bytecode": "0x608060405234801561001057600080fd5b5060f78061001f6000396000f3fe6080604052348015600f57600080fd5b506004361060285760003560e01c806301ffc9a714602d575b600080fd5b60436004803603810190603f9190605b565b6045565b005b50565b60008135905060558160ad565b92915050565b600060208284031215606c57600080fd5b60006078848285016048565b91505092915050565b60007fffffffff0000000000000000000000000000000000000000000000000000000082169050919050565b60b4816081565b811460be57600080fd5b5056fea26469706673582212209cdf4fa419e94c2dc64f2ec2558d77289b6dd3a8222fc4ce60b5af74648a23c164736f6c63430008000033",
+  "deployedBytecode": "0x6080604052348015600f57600080fd5b506004361060285760003560e01c806301ffc9a714602d575b600080fd5b60436004803603810190603f9190605b565b6045565b005b50565b60008135905060558160ad565b92915050565b600060208284031215606c57600080fd5b60006078848285016048565b91505092915050565b60007fffffffff0000000000000000000000000000000000000000000000000000000082169050919050565b60b4816081565b811460be57600080fd5b5056fea26469706673582212209cdf4fa419e94c2dc64f2ec2558d77289b6dd3a8222fc4ce60b5af74648a23c164736f6c63430008000033",
+  "immutableReferences": {},
+  "sourceMap": "58:114:29:-:0;;;;;;;;;;;;;;;;;;;",
+  "deployedSourceMap": "58:114:29:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;91:61;;;;;;;;;;;;;:::i;:::-;;:::i;:::-;;;;:::o;7:137:145:-;;90:6;77:20;68:29;;106:32;132:5;106:32;:::i;:::-;58:86;;;;:::o;150:260::-;;257:2;245:9;236:7;232:23;228:32;225:2;;;273:1;270;263:12;225:2;316:1;341:52;385:7;376:6;365:9;361:22;341:52;:::i;:::-;331:62;;287:116;215:195;;;;:::o;416:149::-;;492:66;485:5;481:78;470:89;;460:105;;;:::o;571:120::-;643:23;660:5;643:23;:::i;:::-;636:5;633:34;623:2;;681:1;678;671:12;623:2;613:78;:::o",
+  "source": "// SPDX-License-Identifier: MIT\n\npragma solidity ^0.8.0;\n\ncontract ERC165MissingData {\n    function supportsInterface(bytes4 interfaceId) public view {} // missing return\n}\n",
+  "sourcePath": "E:/work/工作/czz/合约/truffle/safebox/contracts/openzeppelin/contracts/mocks/ERC165/ERC165MissingData.sol",
+  "ast": {
+    "absolutePath": "/E/work/工作/czz/合约/truffle/safebox/contracts/openzeppelin/contracts/mocks/ERC165/ERC165MissingData.sol",
+    "exportedSymbols": {
+      "ERC165MissingData": [
+        5628
+      ]
+    },
+    "id": 5629,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 5621,
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "33:23:29"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "fullyImplemented": true,
+        "id": 5628,
+        "linearizedBaseContracts": [
+          5628
+        ],
+        "name": "ERC165MissingData",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": {
+              "id": 5626,
+              "nodeType": "Block",
+              "src": "150:2:29",
+              "statements": []
+            },
+            "functionSelector": "01ffc9a7",
+            "id": 5627,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "supportsInterface",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5624,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5623,
+                  "mutability": "mutable",
+                  "name": "interfaceId",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5627,
+                  "src": "118:18:29",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes4",
+                    "typeString": "bytes4"
+                  },
+                  "typeName": {
+                    "id": 5622,
+                    "name": "bytes4",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "118:6:29",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes4",
+                      "typeString": "bytes4"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "117:20:29"
+            },
+            "returnParameters": {
+              "id": 5625,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "150:0:29"
+            },
+            "scope": 5628,
+            "src": "91:61:29",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "public"
+          }
+        ],
+        "scope": 5629,
+        "src": "58:114:29"
+      }
+    ],
+    "src": "33:140:29"
+  },
+  "legacyAST": {
+    "absolutePath": "/E/work/工作/czz/合约/truffle/safebox/contracts/openzeppelin/contracts/mocks/ERC165/ERC165MissingData.sol",
+    "exportedSymbols": {
+      "ERC165MissingData": [
+        5628
+      ]
+    },
+    "id": 5629,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 5621,
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "33:23:29"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "fullyImplemented": true,
+        "id": 5628,
+        "linearizedBaseContracts": [
+          5628
+        ],
+        "name": "ERC165MissingData",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "body": {
+              "id": 5626,
+              "nodeType": "Block",
+              "src": "150:2:29",
+              "statements": []
+            },
+            "functionSelector": "01ffc9a7",
+            "id": 5627,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [],
+            "name": "supportsInterface",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 5624,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 5623,
+                  "mutability": "mutable",
+                  "name": "interfaceId",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 5627,
+                  "src": "118:18:29",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes4",
+                    "typeString": "bytes4"
+                  },
+                  "typeName": {
+                    "id": 5622,
+                    "name": "bytes4",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "118:6:29",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bytes4",
+                      "typeString": "bytes4"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "117:20:29"
+            },
+            "returnParameters": {
+              "id": 5625,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "150:0:29"
+            },
+            "scope": 5628,
+            "src": "91:61:29",
+            "stateMutability": "view",
+            "virtual": false,
+            "visibility": "public"
+          }
+        ],
+        "scope": 5629,
+        "src": "58:114:29"
+      }
+    ],
+    "src": "33:140:29"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.8.0+commit.c7dfd78e.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.2.3",
+  "updatedAt": "2021-03-26T11:32:50.894Z",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "version": 1
+  }
+}

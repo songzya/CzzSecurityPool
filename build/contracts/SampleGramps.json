@@ -1,0 +1,2959 @@
+{
+  "contractName": "SampleGramps",
+  "abi": [
+    {
+      "inputs": [],
+      "name": "gramps",
+      "outputs": [
+        {
+          "internalType": "string",
+          "name": "",
+          "type": "string"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "isHuman",
+      "outputs": [
+        {
+          "internalType": "bool",
+          "name": "",
+          "type": "bool"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "initialize",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "string",
+          "name": "value",
+          "type": "string"
+        }
+      ],
+      "name": "initialize",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.8.0+commit.c7dfd78e\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"gramps\",\"outputs\":[{\"internalType\":\"string\",\"name\":\"\",\"type\":\"string\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"initialize\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"string\",\"name\":\"value\",\"type\":\"string\"}],\"name\":\"initialize\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"isHuman\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"notice\":\"Sample base intializable contract that defines a field gramps\",\"version\":1}},\"settings\":{\"compilationTarget\":{\"/E/work/\\u5de5\\u4f5c/czz/\\u5408\\u7ea6/truffle/safebox/contracts/openzeppelin/contracts/mocks/MultipleInheritanceInitializableMocks.sol\":\"SampleGramps\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/E/work/\\u5de5\\u4f5c/czz/\\u5408\\u7ea6/truffle/safebox/contracts/openzeppelin/contracts/mocks/MultipleInheritanceInitializableMocks.sol\":{\"keccak256\":\"0xd262aa6222134076e697801c09346a04cce001d2e2ea1f3a8d2351806e310d2f\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://c212da44339cdb59cf67de4db4e1f1836ce8708c92ed5f7b3561a2d65c3e4f32\",\"dweb:/ipfs/QmTvoTSMa9awb7dgG1qBaP7jG37Xno5YPHtRexZ6sz7K4N\"]},\"/E/work/\\u5de5\\u4f5c/czz/\\u5408\\u7ea6/truffle/safebox/contracts/openzeppelin/contracts/proxy/utils/Initializable.sol\":{\"keccak256\":\"0x9abb3184c06afb50807598533c4c0943dd864080d310ac28cbb5b2cfae6a18b1\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://1df6c2ef042bb1281bd296e4e0116398a6349c93d20c180a47876f092ded5080\",\"dweb:/ipfs/QmSzqLoUicHAoS4Zg9ofgRNDMckz8jWA294vRmNegNeuW2\"]},\"/E/work/\\u5de5\\u4f5c/czz/\\u5408\\u7ea6/truffle/safebox/contracts/openzeppelin/contracts/utils/Address.sol\":{\"keccak256\":\"0x069b2631bb5b5193a58ccf7a06266c7361bd2c20095667af4402817605627f45\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://6a4c96fafff76deda5697c3c5c98cade6e6e1b178254544c106bf360c079ce4e\",\"dweb:/ipfs/QmXmxubE3jnatFgZuN8ay1VV6hZ8WRmhvUjNpeVjki15HX\"]}},\"version\":1}",
+  "bytecode": "0x608060405234801561001057600080fd5b5061073a806100206000396000f3fe608060405234801561001057600080fd5b506004361061004c5760003560e01c80634a6c9db6146100515780638129fc1c1461006f578063f62d188814610079578063fa39851f14610095575b600080fd5b6100596100b3565b604051610066919061053b565b60405180910390f35b6100776100c6565b005b610093600480360381019061008e919061044c565b6101ba565b005b61009d6102b3565b6040516100aa9190610556565b60405180910390f35b600060029054906101000a900460ff1681565b600060019054906101000a900460ff16806100ec575060008054906101000a900460ff16155b61012b576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040161012290610578565b60405180910390fd5b60008060019054906101000a900460ff16159050801561017b576001600060016101000a81548160ff02191690831515021790555060016000806101000a81548160ff0219169083151502179055505b6001600060026101000a81548160ff02191690831515021790555080156101b75760008060016101000a81548160ff0219169083151502179055505b50565b600060019054906101000a900460ff16806101e0575060008054906101000a900460ff16155b61021f576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040161021690610578565b60405180910390fd5b60008060019054906101000a900460ff16159050801561026f576001600060016101000a81548160ff02191690831515021790555060016000806101000a81548160ff0219169083151502179055505b6102776100c6565b816001908051906020019061028d929190610341565b5080156102af5760008060016101000a81548160ff0219169083151502179055505b5050565b600180546102c090610663565b80601f01602080910402602001604051908101604052809291908181526020018280546102ec90610663565b80156103395780601f1061030e57610100808354040283529160200191610339565b820191906000526020600020905b81548152906001019060200180831161031c57829003601f168201915b505050505081565b82805461034d90610663565b90600052602060002090601f01602090048101928261036f57600085556103b6565b82601f1061038857805160ff19168380011785556103b6565b828001600101855582156103b6579182015b828111156103b557825182559160200191906001019061039a565b5b5090506103c391906103c7565b5090565b5b808211156103e05760008160009055506001016103c8565b5090565b60006103f76103f2846105c9565b610598565b90508281526020810184848401111561040f57600080fd5b61041a848285610621565b509392505050565b600082601f83011261043357600080fd5b81356104438482602086016103e4565b91505092915050565b60006020828403121561045e57600080fd5b600082013567ffffffffffffffff81111561047857600080fd5b61048484828501610422565b91505092915050565b61049681610615565b82525050565b60006104a7826105f9565b6104b18185610604565b93506104c1818560208601610630565b6104ca816106f3565b840191505092915050565b60006104e2602e83610604565b91507f496e697469616c697a61626c653a20636f6e747261637420697320616c72656160008301527f647920696e697469616c697a65640000000000000000000000000000000000006020830152604082019050919050565b6000602082019050610550600083018461048d565b92915050565b60006020820190508181036000830152610570818461049c565b905092915050565b60006020820190508181036000830152610591816104d5565b9050919050565b6000604051905081810181811067ffffffffffffffff821117156105bf576105be6106c4565b5b8060405250919050565b600067ffffffffffffffff8211156105e4576105e36106c4565b5b601f19601f8301169050602081019050919050565b600081519050919050565b600082825260208201905092915050565b60008115159050919050565b82818337600083830152505050565b60005b8381101561064e578082015181840152602081019050610633565b8381111561065d576000848401525b50505050565b6000600282049050600182168061067b57607f821691505b6020821081141561068f5761068e610695565b5b50919050565b7f4e487b7100000000000000000000000000000000000000000000000000000000600052602260045260246000fd5b7f4e487b7100000000000000000000000000000000000000000000000000000000600052604160045260246000fd5b6000601f19601f830116905091905056fea2646970667358221220c8cd6f1261379f51cd0a6f6f3a70dcfaf5b453326c94586a6def947c44bae80f64736f6c63430008000033",
+  "deployedBytecode": "0x608060405234801561001057600080fd5b506004361061004c5760003560e01c80634a6c9db6146100515780638129fc1c1461006f578063f62d188814610079578063fa39851f14610095575b600080fd5b6100596100b3565b604051610066919061053b565b60405180910390f35b6100776100c6565b005b610093600480360381019061008e919061044c565b6101ba565b005b61009d6102b3565b6040516100aa9190610556565b60405180910390f35b600060029054906101000a900460ff1681565b600060019054906101000a900460ff16806100ec575060008054906101000a900460ff16155b61012b576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040161012290610578565b60405180910390fd5b60008060019054906101000a900460ff16159050801561017b576001600060016101000a81548160ff02191690831515021790555060016000806101000a81548160ff0219169083151502179055505b6001600060026101000a81548160ff02191690831515021790555080156101b75760008060016101000a81548160ff0219169083151502179055505b50565b600060019054906101000a900460ff16806101e0575060008054906101000a900460ff16155b61021f576040517f08c379a000000000000000000000000000000000000000000000000000000000815260040161021690610578565b60405180910390fd5b60008060019054906101000a900460ff16159050801561026f576001600060016101000a81548160ff02191690831515021790555060016000806101000a81548160ff0219169083151502179055505b6102776100c6565b816001908051906020019061028d929190610341565b5080156102af5760008060016101000a81548160ff0219169083151502179055505b5050565b600180546102c090610663565b80601f01602080910402602001604051908101604052809291908181526020018280546102ec90610663565b80156103395780601f1061030e57610100808354040283529160200191610339565b820191906000526020600020905b81548152906001019060200180831161031c57829003601f168201915b505050505081565b82805461034d90610663565b90600052602060002090601f01602090048101928261036f57600085556103b6565b82601f1061038857805160ff19168380011785556103b6565b828001600101855582156103b6579182015b828111156103b557825182559160200191906001019061039a565b5b5090506103c391906103c7565b5090565b5b808211156103e05760008160009055506001016103c8565b5090565b60006103f76103f2846105c9565b610598565b90508281526020810184848401111561040f57600080fd5b61041a848285610621565b509392505050565b600082601f83011261043357600080fd5b81356104438482602086016103e4565b91505092915050565b60006020828403121561045e57600080fd5b600082013567ffffffffffffffff81111561047857600080fd5b61048484828501610422565b91505092915050565b61049681610615565b82525050565b60006104a7826105f9565b6104b18185610604565b93506104c1818560208601610630565b6104ca816106f3565b840191505092915050565b60006104e2602e83610604565b91507f496e697469616c697a61626c653a20636f6e747261637420697320616c72656160008301527f647920696e697469616c697a65640000000000000000000000000000000000006020830152604082019050919050565b6000602082019050610550600083018461048d565b92915050565b60006020820190508181036000830152610570818461049c565b905092915050565b60006020820190508181036000830152610591816104d5565b9050919050565b6000604051905081810181811067ffffffffffffffff821117156105bf576105be6106c4565b5b8060405250919050565b600067ffffffffffffffff8211156105e4576105e36106c4565b5b601f19601f8301169050602081019050919050565b600081519050919050565b600082825260208201905092915050565b60008115159050919050565b82818337600083830152505050565b60005b8381101561064e578082015181840152602081019050610633565b8381111561065d576000848401525b50505050565b6000600282049050600182168061067b57607f821691505b6020821081141561068f5761068e610695565b5b50919050565b7f4e487b7100000000000000000000000000000000000000000000000000000000600052602260045260246000fd5b7f4e487b7100000000000000000000000000000000000000000000000000000000600052604160045260246000fd5b6000601f19601f830116905091905056fea2646970667358221220c8cd6f1261379f51cd0a6f6f3a70dcfaf5b453326c94586a6def947c44bae80f64736f6c63430008000033",
+  "immutableReferences": {},
+  "sourceMap": "957:206:57:-:0;;;;;;;;;;;;;;;;;;;",
+  "deployedSourceMap": "957:206:57:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;514:19;;;:::i;:::-;;;;;;;:::i;:::-;;;;;;;;538:66;;;:::i;:::-;;1038:123;;;;;;;;;;;;;:::i;:::-;;:::i;:::-;;1013:20;;;:::i;:::-;;;;;;;:::i;:::-;;;;;;;;514:19;;;;;;;;;;;;;:::o;538:66::-;1495:13:78;;;;;;;;;;;:30;;;;1513:12;;;;;;;;;;1512:13;1495:30;1487:89;;;;;;;;;;;;:::i;:::-;;;;;;;;;1587:19;1610:13;;;;;;;;;;;1609:14;1587:36;;1637:14;1633:98;;;1683:4;1667:13;;:20;;;;;;;;;;;;;;;;;;1716:4;1701:12;;:19;;;;;;;;;;;;;;;;;;1633:98;595:4:57::1;585:7;;:14;;;;;;;;;;;;;;;;;;1757::78::0;1753:66;;;1803:5;1787:13;;:21;;;;;;;;;;;;;;;;;;1753:66;538::57;:::o;1038:123::-;1495:13:78;;;;;;;;;;;:30;;;;1513:12;;;;;;;;;;1512:13;1495:30;1487:89;;;;;;;;;;;;:::i;:::-;;;;;;;;;1587:19;1610:13;;;;;;;;;;;1609:14;1587:36;;1637:14;1633:98;;;1683:4;1667:13;;:20;;;;;;;;;;;;;;;;;;1716:4;1701:12;;:19;;;;;;;;;;;;;;;;;;1633:98;1112:24:57::1;:22;:24::i;:::-;1151:5;1142:6;:14;;;;;;;;;;;;:::i;:::-;;1757::78::0;1753:66;;;1803:5;1787:13;;:21;;;;;;;;;;;;;;;;;;1753:66;1038:123:57;;:::o;1013:20::-;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::o;-1:-1:-1:-;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;;;:::o;:::-;;;;;;;;;;;;;;;;;;;;;:::o;7:344:145:-;;110:65;125:49;167:6;125:49;:::i;:::-;110:65;:::i;:::-;101:74;;198:6;191:5;184:21;236:4;229:5;225:16;274:3;265:6;260:3;256:16;253:25;250:2;;;291:1;288;281:12;250:2;304:41;338:6;333:3;328;304:41;:::i;:::-;91:260;;;;;;:::o;371:273::-;;476:3;469:4;461:6;457:17;453:27;443:2;;494:1;491;484:12;443:2;534:6;521:20;559:79;634:3;626:6;619:4;611:6;607:17;559:79;:::i;:::-;550:88;;433:211;;;;;:::o;650:375::-;;768:2;756:9;747:7;743:23;739:32;736:2;;;784:1;781;774:12;736:2;855:1;844:9;840:17;827:31;885:18;877:6;874:30;871:2;;;917:1;914;907:12;871:2;945:63;1000:7;991:6;980:9;976:22;945:63;:::i;:::-;935:73;;798:220;726:299;;;;:::o;1031:109::-;1112:21;1127:5;1112:21;:::i;:::-;1107:3;1100:34;1090:50;;:::o;1146:364::-;;1262:39;1295:5;1262:39;:::i;:::-;1317:71;1381:6;1376:3;1317:71;:::i;:::-;1310:78;;1397:52;1442:6;1437:3;1430:4;1423:5;1419:16;1397:52;:::i;:::-;1474:29;1496:6;1474:29;:::i;:::-;1469:3;1465:39;1458:46;;1238:272;;;;;:::o;1516:378::-;;1679:67;1743:2;1738:3;1679:67;:::i;:::-;1672:74;;1776:34;1772:1;1767:3;1763:11;1756:55;1842:16;1837:2;1832:3;1828:12;1821:38;1885:2;1880:3;1876:12;1869:19;;1662:232;;;:::o;1900:210::-;;2025:2;2014:9;2010:18;2002:26;;2038:65;2100:1;2089:9;2085:17;2076:6;2038:65;:::i;:::-;1992:118;;;;:::o;2116:313::-;;2267:2;2256:9;2252:18;2244:26;;2316:9;2310:4;2306:20;2302:1;2291:9;2287:17;2280:47;2344:78;2417:4;2408:6;2344:78;:::i;:::-;2336:86;;2234:195;;;;:::o;2435:419::-;;2639:2;2628:9;2624:18;2616:26;;2688:9;2682:4;2678:20;2674:1;2663:9;2659:17;2652:47;2716:131;2842:4;2716:131;:::i;:::-;2708:139;;2606:248;;;:::o;2860:283::-;;2926:2;2920:9;2910:19;;2968:4;2960:6;2956:17;3075:6;3063:10;3060:22;3039:18;3027:10;3024:34;3021:62;3018:2;;;3086:18;;:::i;:::-;3018:2;3126:10;3122:2;3115:22;2900:243;;;;:::o;3149:332::-;;3301:18;3293:6;3290:30;3287:2;;;3323:18;;:::i;:::-;3287:2;3408:4;3404:9;3397:4;3389:6;3385:17;3381:33;3373:41;;3469:4;3463;3459:15;3451:23;;3216:265;;;:::o;3487:99::-;;3573:5;3567:12;3557:22;;3546:40;;;:::o;3592:169::-;;3710:6;3705:3;3698:19;3750:4;3745:3;3741:14;3726:29;;3688:73;;;;:::o;3767:90::-;;3844:5;3837:13;3830:21;3819:32;;3809:48;;;:::o;3863:154::-;3947:6;3942:3;3937;3924:30;4009:1;4000:6;3995:3;3991:16;3984:27;3914:103;;;:::o;4023:307::-;4091:1;4101:113;4115:6;4112:1;4109:13;4101:113;;;4200:1;4195:3;4191:11;4185:18;4181:1;4176:3;4172:11;4165:39;4137:2;4134:1;4130:10;4125:15;;4101:113;;;4232:6;4229:1;4226:13;4223:2;;;4312:1;4303:6;4298:3;4294:16;4287:27;4223:2;4072:258;;;;:::o;4336:320::-;;4417:1;4411:4;4407:12;4397:22;;4464:1;4458:4;4454:12;4485:18;4475:2;;4541:4;4533:6;4529:17;4519:27;;4475:2;4603;4595:6;4592:14;4572:18;4569:38;4566:2;;;4622:18;;:::i;:::-;4566:2;4387:269;;;;:::o;4662:180::-;4710:77;4707:1;4700:88;4807:4;4804:1;4797:15;4831:4;4828:1;4821:15;4848:180;4896:77;4893:1;4886:88;4993:4;4990:1;4983:15;5017:4;5014:1;5007:15;5034:102;;5126:2;5122:7;5117:2;5110:5;5106:14;5102:28;5092:38;;5082:54;;;:::o",
+  "source": "// SPDX-License-Identifier: MIT\n\npragma solidity ^0.8.0;\n\nimport \"../proxy/utils/Initializable.sol\";\n\n// Sample contracts showing upgradeability with multiple inheritance.\n// Child contract inherits from Father and Mother contracts, and Father extends from Gramps.\n//\n//         Human\n//       /       \\\n//      |       Gramps\n//      |         |\n//    Mother    Father\n//      |         |\n//      -- Child --\n\n/**\n * Sample base intializable contract that is a human\n */\ncontract SampleHuman is Initializable {\n  bool public isHuman;\n\n  function initialize() public initializer {\n    isHuman = true;\n  }\n}\n\n/**\n * Sample base intializable contract that defines a field mother\n */\ncontract SampleMother is Initializable, SampleHuman {\n  uint256 public mother;\n\n  function initialize(uint256 value) public initializer virtual {\n    SampleHuman.initialize();\n    mother = value;\n  }\n}\n\n/**\n * Sample base intializable contract that defines a field gramps\n */\ncontract SampleGramps is Initializable, SampleHuman {\n  string public gramps;\n\n  function initialize(string memory value) public initializer virtual {\n    SampleHuman.initialize();\n    gramps = value;\n  }\n}\n\n/**\n * Sample base intializable contract that defines a field father and extends from gramps\n */\ncontract SampleFather is Initializable, SampleGramps {\n  uint256 public father;\n\n  function initialize(string memory _gramps, uint256 _father) public initializer {\n    SampleGramps.initialize(_gramps);\n    father = _father;\n  }\n}\n\n/**\n * Child extends from mother, father (gramps)\n */\ncontract SampleChild is Initializable, SampleMother, SampleFather {\n  uint256 public child;\n\n  function initialize(uint256 _mother, string memory _gramps, uint256 _father, uint256 _child) public initializer {\n    SampleMother.initialize(_mother);\n    SampleFather.initialize(_gramps, _father);\n    child = _child;\n  }\n}\n",
+  "sourcePath": "E:/work/工作/czz/合约/truffle/safebox/contracts/openzeppelin/contracts/mocks/MultipleInheritanceInitializableMocks.sol",
+  "ast": {
+    "absolutePath": "/E/work/工作/czz/合约/truffle/safebox/contracts/openzeppelin/contracts/mocks/MultipleInheritanceInitializableMocks.sol",
+    "exportedSymbols": {
+      "Address": [
+        17214
+      ],
+      "Initializable": [
+        10183
+      ],
+      "SampleChild": [
+        7883
+      ],
+      "SampleFather": [
+        7842
+      ],
+      "SampleGramps": [
+        7814
+      ],
+      "SampleHuman": [
+        7764
+      ],
+      "SampleMother": [
+        7789
+      ]
+    },
+    "id": 7884,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 7747,
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "33:23:57"
+      },
+      {
+        "absolutePath": "/E/work/工作/czz/合约/truffle/safebox/contracts/openzeppelin/contracts/proxy/utils/Initializable.sol",
+        "file": "../proxy/utils/Initializable.sol",
+        "id": 7748,
+        "nodeType": "ImportDirective",
+        "scope": 7884,
+        "sourceUnit": 10184,
+        "src": "58:42:57",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "abstract": false,
+        "baseContracts": [
+          {
+            "baseName": {
+              "id": 7750,
+              "name": "Initializable",
+              "nodeType": "IdentifierPath",
+              "referencedDeclaration": 10183,
+              "src": "496:13:57"
+            },
+            "id": 7751,
+            "nodeType": "InheritanceSpecifier",
+            "src": "496:13:57"
+          }
+        ],
+        "contractDependencies": [
+          10183
+        ],
+        "contractKind": "contract",
+        "documentation": {
+          "id": 7749,
+          "nodeType": "StructuredDocumentation",
+          "src": "411:60:57",
+          "text": " Sample base intializable contract that is a human"
+        },
+        "fullyImplemented": true,
+        "id": 7764,
+        "linearizedBaseContracts": [
+          7764,
+          10183
+        ],
+        "name": "SampleHuman",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "functionSelector": "4a6c9db6",
+            "id": 7753,
+            "mutability": "mutable",
+            "name": "isHuman",
+            "nodeType": "VariableDeclaration",
+            "scope": 7764,
+            "src": "514:19:57",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_bool",
+              "typeString": "bool"
+            },
+            "typeName": {
+              "id": 7752,
+              "name": "bool",
+              "nodeType": "ElementaryTypeName",
+              "src": "514:4:57",
+              "typeDescriptions": {
+                "typeIdentifier": "t_bool",
+                "typeString": "bool"
+              }
+            },
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 7762,
+              "nodeType": "Block",
+              "src": "579:25:57",
+              "statements": [
+                {
+                  "expression": {
+                    "id": 7760,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "id": 7758,
+                      "name": "isHuman",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 7753,
+                      "src": "585:7:57",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "hexValue": "74727565",
+                      "id": 7759,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "kind": "bool",
+                      "lValueRequested": false,
+                      "nodeType": "Literal",
+                      "src": "595:4:57",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      },
+                      "value": "true"
+                    },
+                    "src": "585:14:57",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "id": 7761,
+                  "nodeType": "ExpressionStatement",
+                  "src": "585:14:57"
+                }
+              ]
+            },
+            "functionSelector": "8129fc1c",
+            "id": 7763,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [
+              {
+                "id": 7756,
+                "modifierName": {
+                  "id": 7755,
+                  "name": "initializer",
+                  "nodeType": "IdentifierPath",
+                  "referencedDeclaration": 10182,
+                  "src": "567:11:57"
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "567:11:57"
+              }
+            ],
+            "name": "initialize",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 7754,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "557:2:57"
+            },
+            "returnParameters": {
+              "id": 7757,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "579:0:57"
+            },
+            "scope": 7764,
+            "src": "538:66:57",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "public"
+          }
+        ],
+        "scope": 7884,
+        "src": "472:134:57"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [
+          {
+            "baseName": {
+              "id": 7766,
+              "name": "Initializable",
+              "nodeType": "IdentifierPath",
+              "referencedDeclaration": 10183,
+              "src": "706:13:57"
+            },
+            "id": 7767,
+            "nodeType": "InheritanceSpecifier",
+            "src": "706:13:57"
+          },
+          {
+            "baseName": {
+              "id": 7768,
+              "name": "SampleHuman",
+              "nodeType": "IdentifierPath",
+              "referencedDeclaration": 7764,
+              "src": "721:11:57"
+            },
+            "id": 7769,
+            "nodeType": "InheritanceSpecifier",
+            "src": "721:11:57"
+          }
+        ],
+        "contractDependencies": [
+          7764,
+          10183
+        ],
+        "contractKind": "contract",
+        "documentation": {
+          "id": 7765,
+          "nodeType": "StructuredDocumentation",
+          "src": "608:72:57",
+          "text": " Sample base intializable contract that defines a field mother"
+        },
+        "fullyImplemented": true,
+        "id": 7789,
+        "linearizedBaseContracts": [
+          7789,
+          7764,
+          10183
+        ],
+        "name": "SampleMother",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "functionSelector": "ed7dfee3",
+            "id": 7771,
+            "mutability": "mutable",
+            "name": "mother",
+            "nodeType": "VariableDeclaration",
+            "scope": 7789,
+            "src": "737:21:57",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 7770,
+              "name": "uint256",
+              "nodeType": "ElementaryTypeName",
+              "src": "737:7:57",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 7787,
+              "nodeType": "Block",
+              "src": "825:55:57",
+              "statements": [
+                {
+                  "expression": {
+                    "arguments": [],
+                    "expression": {
+                      "argumentTypes": [],
+                      "expression": {
+                        "id": 7778,
+                        "name": "SampleHuman",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 7764,
+                        "src": "831:11:57",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_type$_t_contract$_SampleHuman_$7764_$",
+                          "typeString": "type(contract SampleHuman)"
+                        }
+                      },
+                      "id": 7780,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "initialize",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 7763,
+                      "src": "831:22:57",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_internal_nonpayable$__$returns$__$",
+                        "typeString": "function ()"
+                      }
+                    },
+                    "id": 7781,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "831:24:57",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 7782,
+                  "nodeType": "ExpressionStatement",
+                  "src": "831:24:57"
+                },
+                {
+                  "expression": {
+                    "id": 7785,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "id": 7783,
+                      "name": "mother",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 7771,
+                      "src": "861:6:57",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "id": 7784,
+                      "name": "value",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 7773,
+                      "src": "870:5:57",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "src": "861:14:57",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "id": 7786,
+                  "nodeType": "ExpressionStatement",
+                  "src": "861:14:57"
+                }
+              ]
+            },
+            "functionSelector": "fe4b84df",
+            "id": 7788,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [
+              {
+                "id": 7776,
+                "modifierName": {
+                  "id": 7775,
+                  "name": "initializer",
+                  "nodeType": "IdentifierPath",
+                  "referencedDeclaration": 10182,
+                  "src": "805:11:57"
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "805:11:57"
+              }
+            ],
+            "name": "initialize",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 7774,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 7773,
+                  "mutability": "mutable",
+                  "name": "value",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 7788,
+                  "src": "783:13:57",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 7772,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "783:7:57",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "782:15:57"
+            },
+            "returnParameters": {
+              "id": 7777,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "825:0:57"
+            },
+            "scope": 7789,
+            "src": "763:117:57",
+            "stateMutability": "nonpayable",
+            "virtual": true,
+            "visibility": "public"
+          }
+        ],
+        "scope": 7884,
+        "src": "681:201:57"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [
+          {
+            "baseName": {
+              "id": 7791,
+              "name": "Initializable",
+              "nodeType": "IdentifierPath",
+              "referencedDeclaration": 10183,
+              "src": "982:13:57"
+            },
+            "id": 7792,
+            "nodeType": "InheritanceSpecifier",
+            "src": "982:13:57"
+          },
+          {
+            "baseName": {
+              "id": 7793,
+              "name": "SampleHuman",
+              "nodeType": "IdentifierPath",
+              "referencedDeclaration": 7764,
+              "src": "997:11:57"
+            },
+            "id": 7794,
+            "nodeType": "InheritanceSpecifier",
+            "src": "997:11:57"
+          }
+        ],
+        "contractDependencies": [
+          7764,
+          10183
+        ],
+        "contractKind": "contract",
+        "documentation": {
+          "id": 7790,
+          "nodeType": "StructuredDocumentation",
+          "src": "884:72:57",
+          "text": " Sample base intializable contract that defines a field gramps"
+        },
+        "fullyImplemented": true,
+        "id": 7814,
+        "linearizedBaseContracts": [
+          7814,
+          7764,
+          10183
+        ],
+        "name": "SampleGramps",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "functionSelector": "fa39851f",
+            "id": 7796,
+            "mutability": "mutable",
+            "name": "gramps",
+            "nodeType": "VariableDeclaration",
+            "scope": 7814,
+            "src": "1013:20:57",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_string_storage",
+              "typeString": "string"
+            },
+            "typeName": {
+              "id": 7795,
+              "name": "string",
+              "nodeType": "ElementaryTypeName",
+              "src": "1013:6:57",
+              "typeDescriptions": {
+                "typeIdentifier": "t_string_storage_ptr",
+                "typeString": "string"
+              }
+            },
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 7812,
+              "nodeType": "Block",
+              "src": "1106:55:57",
+              "statements": [
+                {
+                  "expression": {
+                    "arguments": [],
+                    "expression": {
+                      "argumentTypes": [],
+                      "expression": {
+                        "id": 7803,
+                        "name": "SampleHuman",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 7764,
+                        "src": "1112:11:57",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_type$_t_contract$_SampleHuman_$7764_$",
+                          "typeString": "type(contract SampleHuman)"
+                        }
+                      },
+                      "id": 7805,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "initialize",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 7763,
+                      "src": "1112:22:57",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_internal_nonpayable$__$returns$__$",
+                        "typeString": "function ()"
+                      }
+                    },
+                    "id": 7806,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1112:24:57",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 7807,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1112:24:57"
+                },
+                {
+                  "expression": {
+                    "id": 7810,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "id": 7808,
+                      "name": "gramps",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 7796,
+                      "src": "1142:6:57",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_string_storage",
+                        "typeString": "string storage ref"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "id": 7809,
+                      "name": "value",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 7798,
+                      "src": "1151:5:57",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_string_memory_ptr",
+                        "typeString": "string memory"
+                      }
+                    },
+                    "src": "1142:14:57",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage",
+                      "typeString": "string storage ref"
+                    }
+                  },
+                  "id": 7811,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1142:14:57"
+                }
+              ]
+            },
+            "functionSelector": "f62d1888",
+            "id": 7813,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [
+              {
+                "id": 7801,
+                "modifierName": {
+                  "id": 7800,
+                  "name": "initializer",
+                  "nodeType": "IdentifierPath",
+                  "referencedDeclaration": 10182,
+                  "src": "1086:11:57"
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1086:11:57"
+              }
+            ],
+            "name": "initialize",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 7799,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 7798,
+                  "mutability": "mutable",
+                  "name": "value",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 7813,
+                  "src": "1058:19:57",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 7797,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1058:6:57",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1057:21:57"
+            },
+            "returnParameters": {
+              "id": 7802,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1106:0:57"
+            },
+            "scope": 7814,
+            "src": "1038:123:57",
+            "stateMutability": "nonpayable",
+            "virtual": true,
+            "visibility": "public"
+          }
+        ],
+        "scope": 7884,
+        "src": "957:206:57"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [
+          {
+            "baseName": {
+              "id": 7816,
+              "name": "Initializable",
+              "nodeType": "IdentifierPath",
+              "referencedDeclaration": 10183,
+              "src": "1287:13:57"
+            },
+            "id": 7817,
+            "nodeType": "InheritanceSpecifier",
+            "src": "1287:13:57"
+          },
+          {
+            "baseName": {
+              "id": 7818,
+              "name": "SampleGramps",
+              "nodeType": "IdentifierPath",
+              "referencedDeclaration": 7814,
+              "src": "1302:12:57"
+            },
+            "id": 7819,
+            "nodeType": "InheritanceSpecifier",
+            "src": "1302:12:57"
+          }
+        ],
+        "contractDependencies": [
+          7764,
+          7814,
+          10183
+        ],
+        "contractKind": "contract",
+        "documentation": {
+          "id": 7815,
+          "nodeType": "StructuredDocumentation",
+          "src": "1165:96:57",
+          "text": " Sample base intializable contract that defines a field father and extends from gramps"
+        },
+        "fullyImplemented": true,
+        "id": 7842,
+        "linearizedBaseContracts": [
+          7842,
+          7814,
+          7764,
+          10183
+        ],
+        "name": "SampleFather",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "functionSelector": "1c8aca3b",
+            "id": 7821,
+            "mutability": "mutable",
+            "name": "father",
+            "nodeType": "VariableDeclaration",
+            "scope": 7842,
+            "src": "1319:21:57",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 7820,
+              "name": "uint256",
+              "nodeType": "ElementaryTypeName",
+              "src": "1319:7:57",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 7840,
+              "nodeType": "Block",
+              "src": "1424:65:57",
+              "statements": [
+                {
+                  "expression": {
+                    "arguments": [
+                      {
+                        "id": 7833,
+                        "name": "_gramps",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 7823,
+                        "src": "1454:7:57",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_string_memory_ptr",
+                          "typeString": "string memory"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_string_memory_ptr",
+                          "typeString": "string memory"
+                        }
+                      ],
+                      "expression": {
+                        "id": 7830,
+                        "name": "SampleGramps",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 7814,
+                        "src": "1430:12:57",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_type$_t_contract$_SampleGramps_$7814_$",
+                          "typeString": "type(contract SampleGramps)"
+                        }
+                      },
+                      "id": 7832,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "initialize",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 7813,
+                      "src": "1430:23:57",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_internal_nonpayable$_t_string_memory_ptr_$returns$__$",
+                        "typeString": "function (string memory)"
+                      }
+                    },
+                    "id": 7834,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1430:32:57",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 7835,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1430:32:57"
+                },
+                {
+                  "expression": {
+                    "id": 7838,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "id": 7836,
+                      "name": "father",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 7821,
+                      "src": "1468:6:57",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "id": 7837,
+                      "name": "_father",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 7825,
+                      "src": "1477:7:57",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "src": "1468:16:57",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "id": 7839,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1468:16:57"
+                }
+              ]
+            },
+            "functionSelector": "8beaf7d7",
+            "id": 7841,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [
+              {
+                "id": 7828,
+                "modifierName": {
+                  "id": 7827,
+                  "name": "initializer",
+                  "nodeType": "IdentifierPath",
+                  "referencedDeclaration": 10182,
+                  "src": "1412:11:57"
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1412:11:57"
+              }
+            ],
+            "name": "initialize",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 7826,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 7823,
+                  "mutability": "mutable",
+                  "name": "_gramps",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 7841,
+                  "src": "1365:21:57",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 7822,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1365:6:57",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 7825,
+                  "mutability": "mutable",
+                  "name": "_father",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 7841,
+                  "src": "1388:15:57",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 7824,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1388:7:57",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1364:40:57"
+            },
+            "returnParameters": {
+              "id": 7829,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1424:0:57"
+            },
+            "scope": 7842,
+            "src": "1345:144:57",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "public"
+          }
+        ],
+        "scope": 7884,
+        "src": "1262:229:57"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [
+          {
+            "baseName": {
+              "id": 7844,
+              "name": "Initializable",
+              "nodeType": "IdentifierPath",
+              "referencedDeclaration": 10183,
+              "src": "1571:13:57"
+            },
+            "id": 7845,
+            "nodeType": "InheritanceSpecifier",
+            "src": "1571:13:57"
+          },
+          {
+            "baseName": {
+              "id": 7846,
+              "name": "SampleMother",
+              "nodeType": "IdentifierPath",
+              "referencedDeclaration": 7789,
+              "src": "1586:12:57"
+            },
+            "id": 7847,
+            "nodeType": "InheritanceSpecifier",
+            "src": "1586:12:57"
+          },
+          {
+            "baseName": {
+              "id": 7848,
+              "name": "SampleFather",
+              "nodeType": "IdentifierPath",
+              "referencedDeclaration": 7842,
+              "src": "1600:12:57"
+            },
+            "id": 7849,
+            "nodeType": "InheritanceSpecifier",
+            "src": "1600:12:57"
+          }
+        ],
+        "contractDependencies": [
+          7764,
+          7789,
+          7814,
+          7842,
+          10183
+        ],
+        "contractKind": "contract",
+        "documentation": {
+          "id": 7843,
+          "nodeType": "StructuredDocumentation",
+          "src": "1493:53:57",
+          "text": " Child extends from mother, father (gramps)"
+        },
+        "fullyImplemented": true,
+        "id": 7883,
+        "linearizedBaseContracts": [
+          7883,
+          7842,
+          7814,
+          7789,
+          7764,
+          10183
+        ],
+        "name": "SampleChild",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "functionSelector": "237b5e96",
+            "id": 7851,
+            "mutability": "mutable",
+            "name": "child",
+            "nodeType": "VariableDeclaration",
+            "scope": 7883,
+            "src": "1617:20:57",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 7850,
+              "name": "uint256",
+              "nodeType": "ElementaryTypeName",
+              "src": "1617:7:57",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 7881,
+              "nodeType": "Block",
+              "src": "1754:110:57",
+              "statements": [
+                {
+                  "expression": {
+                    "arguments": [
+                      {
+                        "id": 7867,
+                        "name": "_mother",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 7853,
+                        "src": "1784:7:57",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      ],
+                      "expression": {
+                        "id": 7864,
+                        "name": "SampleMother",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 7789,
+                        "src": "1760:12:57",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_type$_t_contract$_SampleMother_$7789_$",
+                          "typeString": "type(contract SampleMother)"
+                        }
+                      },
+                      "id": 7866,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "initialize",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 7788,
+                      "src": "1760:23:57",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_internal_nonpayable$_t_uint256_$returns$__$",
+                        "typeString": "function (uint256)"
+                      }
+                    },
+                    "id": 7868,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1760:32:57",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 7869,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1760:32:57"
+                },
+                {
+                  "expression": {
+                    "arguments": [
+                      {
+                        "id": 7873,
+                        "name": "_gramps",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 7855,
+                        "src": "1822:7:57",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_string_memory_ptr",
+                          "typeString": "string memory"
+                        }
+                      },
+                      {
+                        "id": 7874,
+                        "name": "_father",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 7857,
+                        "src": "1831:7:57",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_string_memory_ptr",
+                          "typeString": "string memory"
+                        },
+                        {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      ],
+                      "expression": {
+                        "id": 7870,
+                        "name": "SampleFather",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 7842,
+                        "src": "1798:12:57",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_type$_t_contract$_SampleFather_$7842_$",
+                          "typeString": "type(contract SampleFather)"
+                        }
+                      },
+                      "id": 7872,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "initialize",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 7841,
+                      "src": "1798:23:57",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_internal_nonpayable$_t_string_memory_ptr_$_t_uint256_$returns$__$",
+                        "typeString": "function (string memory,uint256)"
+                      }
+                    },
+                    "id": 7875,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1798:41:57",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 7876,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1798:41:57"
+                },
+                {
+                  "expression": {
+                    "id": 7879,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "id": 7877,
+                      "name": "child",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 7851,
+                      "src": "1845:5:57",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "id": 7878,
+                      "name": "_child",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 7859,
+                      "src": "1853:6:57",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "src": "1845:14:57",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "id": 7880,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1845:14:57"
+                }
+              ]
+            },
+            "functionSelector": "6f2edbd2",
+            "id": 7882,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [
+              {
+                "id": 7862,
+                "modifierName": {
+                  "id": 7861,
+                  "name": "initializer",
+                  "nodeType": "IdentifierPath",
+                  "referencedDeclaration": 10182,
+                  "src": "1742:11:57"
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1742:11:57"
+              }
+            ],
+            "name": "initialize",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 7860,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 7853,
+                  "mutability": "mutable",
+                  "name": "_mother",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 7882,
+                  "src": "1662:15:57",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 7852,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1662:7:57",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 7855,
+                  "mutability": "mutable",
+                  "name": "_gramps",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 7882,
+                  "src": "1679:21:57",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 7854,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1679:6:57",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 7857,
+                  "mutability": "mutable",
+                  "name": "_father",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 7882,
+                  "src": "1702:15:57",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 7856,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1702:7:57",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 7859,
+                  "mutability": "mutable",
+                  "name": "_child",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 7882,
+                  "src": "1719:14:57",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 7858,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1719:7:57",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1661:73:57"
+            },
+            "returnParameters": {
+              "id": 7863,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1754:0:57"
+            },
+            "scope": 7883,
+            "src": "1642:222:57",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "public"
+          }
+        ],
+        "scope": 7884,
+        "src": "1547:319:57"
+      }
+    ],
+    "src": "33:1834:57"
+  },
+  "legacyAST": {
+    "absolutePath": "/E/work/工作/czz/合约/truffle/safebox/contracts/openzeppelin/contracts/mocks/MultipleInheritanceInitializableMocks.sol",
+    "exportedSymbols": {
+      "Address": [
+        17214
+      ],
+      "Initializable": [
+        10183
+      ],
+      "SampleChild": [
+        7883
+      ],
+      "SampleFather": [
+        7842
+      ],
+      "SampleGramps": [
+        7814
+      ],
+      "SampleHuman": [
+        7764
+      ],
+      "SampleMother": [
+        7789
+      ]
+    },
+    "id": 7884,
+    "license": "MIT",
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 7747,
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "33:23:57"
+      },
+      {
+        "absolutePath": "/E/work/工作/czz/合约/truffle/safebox/contracts/openzeppelin/contracts/proxy/utils/Initializable.sol",
+        "file": "../proxy/utils/Initializable.sol",
+        "id": 7748,
+        "nodeType": "ImportDirective",
+        "scope": 7884,
+        "sourceUnit": 10184,
+        "src": "58:42:57",
+        "symbolAliases": [],
+        "unitAlias": ""
+      },
+      {
+        "abstract": false,
+        "baseContracts": [
+          {
+            "baseName": {
+              "id": 7750,
+              "name": "Initializable",
+              "nodeType": "IdentifierPath",
+              "referencedDeclaration": 10183,
+              "src": "496:13:57"
+            },
+            "id": 7751,
+            "nodeType": "InheritanceSpecifier",
+            "src": "496:13:57"
+          }
+        ],
+        "contractDependencies": [
+          10183
+        ],
+        "contractKind": "contract",
+        "documentation": {
+          "id": 7749,
+          "nodeType": "StructuredDocumentation",
+          "src": "411:60:57",
+          "text": " Sample base intializable contract that is a human"
+        },
+        "fullyImplemented": true,
+        "id": 7764,
+        "linearizedBaseContracts": [
+          7764,
+          10183
+        ],
+        "name": "SampleHuman",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "functionSelector": "4a6c9db6",
+            "id": 7753,
+            "mutability": "mutable",
+            "name": "isHuman",
+            "nodeType": "VariableDeclaration",
+            "scope": 7764,
+            "src": "514:19:57",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_bool",
+              "typeString": "bool"
+            },
+            "typeName": {
+              "id": 7752,
+              "name": "bool",
+              "nodeType": "ElementaryTypeName",
+              "src": "514:4:57",
+              "typeDescriptions": {
+                "typeIdentifier": "t_bool",
+                "typeString": "bool"
+              }
+            },
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 7762,
+              "nodeType": "Block",
+              "src": "579:25:57",
+              "statements": [
+                {
+                  "expression": {
+                    "id": 7760,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "id": 7758,
+                      "name": "isHuman",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 7753,
+                      "src": "585:7:57",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "hexValue": "74727565",
+                      "id": 7759,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": true,
+                      "kind": "bool",
+                      "lValueRequested": false,
+                      "nodeType": "Literal",
+                      "src": "595:4:57",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_bool",
+                        "typeString": "bool"
+                      },
+                      "value": "true"
+                    },
+                    "src": "585:14:57",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_bool",
+                      "typeString": "bool"
+                    }
+                  },
+                  "id": 7761,
+                  "nodeType": "ExpressionStatement",
+                  "src": "585:14:57"
+                }
+              ]
+            },
+            "functionSelector": "8129fc1c",
+            "id": 7763,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [
+              {
+                "id": 7756,
+                "modifierName": {
+                  "id": 7755,
+                  "name": "initializer",
+                  "nodeType": "IdentifierPath",
+                  "referencedDeclaration": 10182,
+                  "src": "567:11:57"
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "567:11:57"
+              }
+            ],
+            "name": "initialize",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 7754,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "557:2:57"
+            },
+            "returnParameters": {
+              "id": 7757,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "579:0:57"
+            },
+            "scope": 7764,
+            "src": "538:66:57",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "public"
+          }
+        ],
+        "scope": 7884,
+        "src": "472:134:57"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [
+          {
+            "baseName": {
+              "id": 7766,
+              "name": "Initializable",
+              "nodeType": "IdentifierPath",
+              "referencedDeclaration": 10183,
+              "src": "706:13:57"
+            },
+            "id": 7767,
+            "nodeType": "InheritanceSpecifier",
+            "src": "706:13:57"
+          },
+          {
+            "baseName": {
+              "id": 7768,
+              "name": "SampleHuman",
+              "nodeType": "IdentifierPath",
+              "referencedDeclaration": 7764,
+              "src": "721:11:57"
+            },
+            "id": 7769,
+            "nodeType": "InheritanceSpecifier",
+            "src": "721:11:57"
+          }
+        ],
+        "contractDependencies": [
+          7764,
+          10183
+        ],
+        "contractKind": "contract",
+        "documentation": {
+          "id": 7765,
+          "nodeType": "StructuredDocumentation",
+          "src": "608:72:57",
+          "text": " Sample base intializable contract that defines a field mother"
+        },
+        "fullyImplemented": true,
+        "id": 7789,
+        "linearizedBaseContracts": [
+          7789,
+          7764,
+          10183
+        ],
+        "name": "SampleMother",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "functionSelector": "ed7dfee3",
+            "id": 7771,
+            "mutability": "mutable",
+            "name": "mother",
+            "nodeType": "VariableDeclaration",
+            "scope": 7789,
+            "src": "737:21:57",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 7770,
+              "name": "uint256",
+              "nodeType": "ElementaryTypeName",
+              "src": "737:7:57",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 7787,
+              "nodeType": "Block",
+              "src": "825:55:57",
+              "statements": [
+                {
+                  "expression": {
+                    "arguments": [],
+                    "expression": {
+                      "argumentTypes": [],
+                      "expression": {
+                        "id": 7778,
+                        "name": "SampleHuman",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 7764,
+                        "src": "831:11:57",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_type$_t_contract$_SampleHuman_$7764_$",
+                          "typeString": "type(contract SampleHuman)"
+                        }
+                      },
+                      "id": 7780,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "initialize",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 7763,
+                      "src": "831:22:57",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_internal_nonpayable$__$returns$__$",
+                        "typeString": "function ()"
+                      }
+                    },
+                    "id": 7781,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "831:24:57",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 7782,
+                  "nodeType": "ExpressionStatement",
+                  "src": "831:24:57"
+                },
+                {
+                  "expression": {
+                    "id": 7785,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "id": 7783,
+                      "name": "mother",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 7771,
+                      "src": "861:6:57",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "id": 7784,
+                      "name": "value",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 7773,
+                      "src": "870:5:57",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "src": "861:14:57",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "id": 7786,
+                  "nodeType": "ExpressionStatement",
+                  "src": "861:14:57"
+                }
+              ]
+            },
+            "functionSelector": "fe4b84df",
+            "id": 7788,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [
+              {
+                "id": 7776,
+                "modifierName": {
+                  "id": 7775,
+                  "name": "initializer",
+                  "nodeType": "IdentifierPath",
+                  "referencedDeclaration": 10182,
+                  "src": "805:11:57"
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "805:11:57"
+              }
+            ],
+            "name": "initialize",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 7774,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 7773,
+                  "mutability": "mutable",
+                  "name": "value",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 7788,
+                  "src": "783:13:57",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 7772,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "783:7:57",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "782:15:57"
+            },
+            "returnParameters": {
+              "id": 7777,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "825:0:57"
+            },
+            "scope": 7789,
+            "src": "763:117:57",
+            "stateMutability": "nonpayable",
+            "virtual": true,
+            "visibility": "public"
+          }
+        ],
+        "scope": 7884,
+        "src": "681:201:57"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [
+          {
+            "baseName": {
+              "id": 7791,
+              "name": "Initializable",
+              "nodeType": "IdentifierPath",
+              "referencedDeclaration": 10183,
+              "src": "982:13:57"
+            },
+            "id": 7792,
+            "nodeType": "InheritanceSpecifier",
+            "src": "982:13:57"
+          },
+          {
+            "baseName": {
+              "id": 7793,
+              "name": "SampleHuman",
+              "nodeType": "IdentifierPath",
+              "referencedDeclaration": 7764,
+              "src": "997:11:57"
+            },
+            "id": 7794,
+            "nodeType": "InheritanceSpecifier",
+            "src": "997:11:57"
+          }
+        ],
+        "contractDependencies": [
+          7764,
+          10183
+        ],
+        "contractKind": "contract",
+        "documentation": {
+          "id": 7790,
+          "nodeType": "StructuredDocumentation",
+          "src": "884:72:57",
+          "text": " Sample base intializable contract that defines a field gramps"
+        },
+        "fullyImplemented": true,
+        "id": 7814,
+        "linearizedBaseContracts": [
+          7814,
+          7764,
+          10183
+        ],
+        "name": "SampleGramps",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "functionSelector": "fa39851f",
+            "id": 7796,
+            "mutability": "mutable",
+            "name": "gramps",
+            "nodeType": "VariableDeclaration",
+            "scope": 7814,
+            "src": "1013:20:57",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_string_storage",
+              "typeString": "string"
+            },
+            "typeName": {
+              "id": 7795,
+              "name": "string",
+              "nodeType": "ElementaryTypeName",
+              "src": "1013:6:57",
+              "typeDescriptions": {
+                "typeIdentifier": "t_string_storage_ptr",
+                "typeString": "string"
+              }
+            },
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 7812,
+              "nodeType": "Block",
+              "src": "1106:55:57",
+              "statements": [
+                {
+                  "expression": {
+                    "arguments": [],
+                    "expression": {
+                      "argumentTypes": [],
+                      "expression": {
+                        "id": 7803,
+                        "name": "SampleHuman",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 7764,
+                        "src": "1112:11:57",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_type$_t_contract$_SampleHuman_$7764_$",
+                          "typeString": "type(contract SampleHuman)"
+                        }
+                      },
+                      "id": 7805,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "initialize",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 7763,
+                      "src": "1112:22:57",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_internal_nonpayable$__$returns$__$",
+                        "typeString": "function ()"
+                      }
+                    },
+                    "id": 7806,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1112:24:57",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 7807,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1112:24:57"
+                },
+                {
+                  "expression": {
+                    "id": 7810,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "id": 7808,
+                      "name": "gramps",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 7796,
+                      "src": "1142:6:57",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_string_storage",
+                        "typeString": "string storage ref"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "id": 7809,
+                      "name": "value",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 7798,
+                      "src": "1151:5:57",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_string_memory_ptr",
+                        "typeString": "string memory"
+                      }
+                    },
+                    "src": "1142:14:57",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage",
+                      "typeString": "string storage ref"
+                    }
+                  },
+                  "id": 7811,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1142:14:57"
+                }
+              ]
+            },
+            "functionSelector": "f62d1888",
+            "id": 7813,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [
+              {
+                "id": 7801,
+                "modifierName": {
+                  "id": 7800,
+                  "name": "initializer",
+                  "nodeType": "IdentifierPath",
+                  "referencedDeclaration": 10182,
+                  "src": "1086:11:57"
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1086:11:57"
+              }
+            ],
+            "name": "initialize",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 7799,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 7798,
+                  "mutability": "mutable",
+                  "name": "value",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 7813,
+                  "src": "1058:19:57",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 7797,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1058:6:57",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1057:21:57"
+            },
+            "returnParameters": {
+              "id": 7802,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1106:0:57"
+            },
+            "scope": 7814,
+            "src": "1038:123:57",
+            "stateMutability": "nonpayable",
+            "virtual": true,
+            "visibility": "public"
+          }
+        ],
+        "scope": 7884,
+        "src": "957:206:57"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [
+          {
+            "baseName": {
+              "id": 7816,
+              "name": "Initializable",
+              "nodeType": "IdentifierPath",
+              "referencedDeclaration": 10183,
+              "src": "1287:13:57"
+            },
+            "id": 7817,
+            "nodeType": "InheritanceSpecifier",
+            "src": "1287:13:57"
+          },
+          {
+            "baseName": {
+              "id": 7818,
+              "name": "SampleGramps",
+              "nodeType": "IdentifierPath",
+              "referencedDeclaration": 7814,
+              "src": "1302:12:57"
+            },
+            "id": 7819,
+            "nodeType": "InheritanceSpecifier",
+            "src": "1302:12:57"
+          }
+        ],
+        "contractDependencies": [
+          7764,
+          7814,
+          10183
+        ],
+        "contractKind": "contract",
+        "documentation": {
+          "id": 7815,
+          "nodeType": "StructuredDocumentation",
+          "src": "1165:96:57",
+          "text": " Sample base intializable contract that defines a field father and extends from gramps"
+        },
+        "fullyImplemented": true,
+        "id": 7842,
+        "linearizedBaseContracts": [
+          7842,
+          7814,
+          7764,
+          10183
+        ],
+        "name": "SampleFather",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "functionSelector": "1c8aca3b",
+            "id": 7821,
+            "mutability": "mutable",
+            "name": "father",
+            "nodeType": "VariableDeclaration",
+            "scope": 7842,
+            "src": "1319:21:57",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 7820,
+              "name": "uint256",
+              "nodeType": "ElementaryTypeName",
+              "src": "1319:7:57",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 7840,
+              "nodeType": "Block",
+              "src": "1424:65:57",
+              "statements": [
+                {
+                  "expression": {
+                    "arguments": [
+                      {
+                        "id": 7833,
+                        "name": "_gramps",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 7823,
+                        "src": "1454:7:57",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_string_memory_ptr",
+                          "typeString": "string memory"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_string_memory_ptr",
+                          "typeString": "string memory"
+                        }
+                      ],
+                      "expression": {
+                        "id": 7830,
+                        "name": "SampleGramps",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 7814,
+                        "src": "1430:12:57",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_type$_t_contract$_SampleGramps_$7814_$",
+                          "typeString": "type(contract SampleGramps)"
+                        }
+                      },
+                      "id": 7832,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "initialize",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 7813,
+                      "src": "1430:23:57",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_internal_nonpayable$_t_string_memory_ptr_$returns$__$",
+                        "typeString": "function (string memory)"
+                      }
+                    },
+                    "id": 7834,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1430:32:57",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 7835,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1430:32:57"
+                },
+                {
+                  "expression": {
+                    "id": 7838,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "id": 7836,
+                      "name": "father",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 7821,
+                      "src": "1468:6:57",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "id": 7837,
+                      "name": "_father",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 7825,
+                      "src": "1477:7:57",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "src": "1468:16:57",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "id": 7839,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1468:16:57"
+                }
+              ]
+            },
+            "functionSelector": "8beaf7d7",
+            "id": 7841,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [
+              {
+                "id": 7828,
+                "modifierName": {
+                  "id": 7827,
+                  "name": "initializer",
+                  "nodeType": "IdentifierPath",
+                  "referencedDeclaration": 10182,
+                  "src": "1412:11:57"
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1412:11:57"
+              }
+            ],
+            "name": "initialize",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 7826,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 7823,
+                  "mutability": "mutable",
+                  "name": "_gramps",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 7841,
+                  "src": "1365:21:57",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 7822,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1365:6:57",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 7825,
+                  "mutability": "mutable",
+                  "name": "_father",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 7841,
+                  "src": "1388:15:57",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 7824,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1388:7:57",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1364:40:57"
+            },
+            "returnParameters": {
+              "id": 7829,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1424:0:57"
+            },
+            "scope": 7842,
+            "src": "1345:144:57",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "public"
+          }
+        ],
+        "scope": 7884,
+        "src": "1262:229:57"
+      },
+      {
+        "abstract": false,
+        "baseContracts": [
+          {
+            "baseName": {
+              "id": 7844,
+              "name": "Initializable",
+              "nodeType": "IdentifierPath",
+              "referencedDeclaration": 10183,
+              "src": "1571:13:57"
+            },
+            "id": 7845,
+            "nodeType": "InheritanceSpecifier",
+            "src": "1571:13:57"
+          },
+          {
+            "baseName": {
+              "id": 7846,
+              "name": "SampleMother",
+              "nodeType": "IdentifierPath",
+              "referencedDeclaration": 7789,
+              "src": "1586:12:57"
+            },
+            "id": 7847,
+            "nodeType": "InheritanceSpecifier",
+            "src": "1586:12:57"
+          },
+          {
+            "baseName": {
+              "id": 7848,
+              "name": "SampleFather",
+              "nodeType": "IdentifierPath",
+              "referencedDeclaration": 7842,
+              "src": "1600:12:57"
+            },
+            "id": 7849,
+            "nodeType": "InheritanceSpecifier",
+            "src": "1600:12:57"
+          }
+        ],
+        "contractDependencies": [
+          7764,
+          7789,
+          7814,
+          7842,
+          10183
+        ],
+        "contractKind": "contract",
+        "documentation": {
+          "id": 7843,
+          "nodeType": "StructuredDocumentation",
+          "src": "1493:53:57",
+          "text": " Child extends from mother, father (gramps)"
+        },
+        "fullyImplemented": true,
+        "id": 7883,
+        "linearizedBaseContracts": [
+          7883,
+          7842,
+          7814,
+          7789,
+          7764,
+          10183
+        ],
+        "name": "SampleChild",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "constant": false,
+            "functionSelector": "237b5e96",
+            "id": 7851,
+            "mutability": "mutable",
+            "name": "child",
+            "nodeType": "VariableDeclaration",
+            "scope": 7883,
+            "src": "1617:20:57",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 7850,
+              "name": "uint256",
+              "nodeType": "ElementaryTypeName",
+              "src": "1617:7:57",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 7881,
+              "nodeType": "Block",
+              "src": "1754:110:57",
+              "statements": [
+                {
+                  "expression": {
+                    "arguments": [
+                      {
+                        "id": 7867,
+                        "name": "_mother",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 7853,
+                        "src": "1784:7:57",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      ],
+                      "expression": {
+                        "id": 7864,
+                        "name": "SampleMother",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 7789,
+                        "src": "1760:12:57",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_type$_t_contract$_SampleMother_$7789_$",
+                          "typeString": "type(contract SampleMother)"
+                        }
+                      },
+                      "id": 7866,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "initialize",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 7788,
+                      "src": "1760:23:57",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_internal_nonpayable$_t_uint256_$returns$__$",
+                        "typeString": "function (uint256)"
+                      }
+                    },
+                    "id": 7868,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1760:32:57",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 7869,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1760:32:57"
+                },
+                {
+                  "expression": {
+                    "arguments": [
+                      {
+                        "id": 7873,
+                        "name": "_gramps",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 7855,
+                        "src": "1822:7:57",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_string_memory_ptr",
+                          "typeString": "string memory"
+                        }
+                      },
+                      {
+                        "id": 7874,
+                        "name": "_father",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 7857,
+                        "src": "1831:7:57",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_string_memory_ptr",
+                          "typeString": "string memory"
+                        },
+                        {
+                          "typeIdentifier": "t_uint256",
+                          "typeString": "uint256"
+                        }
+                      ],
+                      "expression": {
+                        "id": 7870,
+                        "name": "SampleFather",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 7842,
+                        "src": "1798:12:57",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_type$_t_contract$_SampleFather_$7842_$",
+                          "typeString": "type(contract SampleFather)"
+                        }
+                      },
+                      "id": 7872,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "initialize",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 7841,
+                      "src": "1798:23:57",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_internal_nonpayable$_t_string_memory_ptr_$_t_uint256_$returns$__$",
+                        "typeString": "function (string memory,uint256)"
+                      }
+                    },
+                    "id": 7875,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "1798:41:57",
+                    "tryCall": false,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 7876,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1798:41:57"
+                },
+                {
+                  "expression": {
+                    "id": 7879,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "id": 7877,
+                      "name": "child",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 7851,
+                      "src": "1845:5:57",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "id": 7878,
+                      "name": "_child",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 7859,
+                      "src": "1853:6:57",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_uint256",
+                        "typeString": "uint256"
+                      }
+                    },
+                    "src": "1845:14:57",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "id": 7880,
+                  "nodeType": "ExpressionStatement",
+                  "src": "1845:14:57"
+                }
+              ]
+            },
+            "functionSelector": "6f2edbd2",
+            "id": 7882,
+            "implemented": true,
+            "kind": "function",
+            "modifiers": [
+              {
+                "id": 7862,
+                "modifierName": {
+                  "id": 7861,
+                  "name": "initializer",
+                  "nodeType": "IdentifierPath",
+                  "referencedDeclaration": 10182,
+                  "src": "1742:11:57"
+                },
+                "nodeType": "ModifierInvocation",
+                "src": "1742:11:57"
+              }
+            ],
+            "name": "initialize",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 7860,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 7853,
+                  "mutability": "mutable",
+                  "name": "_mother",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 7882,
+                  "src": "1662:15:57",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 7852,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1662:7:57",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 7855,
+                  "mutability": "mutable",
+                  "name": "_gramps",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 7882,
+                  "src": "1679:21:57",
+                  "stateVariable": false,
+                  "storageLocation": "memory",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 7854,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1679:6:57",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 7857,
+                  "mutability": "mutable",
+                  "name": "_father",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 7882,
+                  "src": "1702:15:57",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 7856,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1702:7:57",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 7859,
+                  "mutability": "mutable",
+                  "name": "_child",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 7882,
+                  "src": "1719:14:57",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 7858,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1719:7:57",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1661:73:57"
+            },
+            "returnParameters": {
+              "id": 7863,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1754:0:57"
+            },
+            "scope": 7883,
+            "src": "1642:222:57",
+            "stateMutability": "nonpayable",
+            "virtual": false,
+            "visibility": "public"
+          }
+        ],
+        "scope": 7884,
+        "src": "1547:319:57"
+      }
+    ],
+    "src": "33:1834:57"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.8.0+commit.c7dfd78e.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.2.3",
+  "updatedAt": "2021-03-26T11:32:50.966Z",
+  "devdoc": {
+    "kind": "dev",
+    "methods": {},
+    "version": 1
+  },
+  "userdoc": {
+    "kind": "user",
+    "methods": {},
+    "notice": "Sample base intializable contract that defines a field gramps",
+    "version": 1
+  }
+}
