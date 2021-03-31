@@ -1,51 +1,183 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "../../openzeppelin/contracts/access/Ownable.sol";
-import "../../openzeppelin/contracts/utils/structs/EnumerableSet.sol";
-import "../../openzeppelin/contracts/token/ERC20/IERC20.sol";
-import "../../openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
-import "../../openzeppelin/contracts/utils/math/SafeMath.sol";
-import "./interface/IMdx.sol";
+interface IERC20 {
+    /**
+     * @dev Returns the amount of tokens in existence.
+     */
+    function totalSupply() external view returns (uint256);
 
-interface IMasterChefHeco {
-    function pending(uint256 pid, address user) external view returns (uint256);
+    /**
+     * @dev Returns the amount of tokens owned by `account`.
+     */
+    function balanceOf(address account) external view returns (uint256);
 
-    function deposit(uint256 pid, uint256 amount) external;
+    /**
+     * @dev Moves `amount` tokens from the caller's account to `recipient`.
+     *
+     * Returns a boolean value indicating whether the operation succeeded.
+     *
+     * Emits a {Transfer} event.
+     */
+    function transfer(address recipient, uint256 amount) external returns (bool);
 
-    function withdraw(uint256 pid, uint256 amount) external;
+    /**
+     * @dev Returns the remaining number of tokens that `spender` will be
+     * allowed to spend on behalf of `owner` through {transferFrom}. This is
+     * zero by default.
+     *
+     * This value changes when {approve} or {transferFrom} are called.
+     */
+    function allowance(address owner, address spender) external view returns (uint256);
 
-    function emergencyWithdraw(uint256 pid) external;
+    /**
+     * @dev Sets `amount` as the allowance of `spender` over the caller's tokens.
+     *
+     * Returns a boolean value indicating whether the operation succeeded.
+     *
+     * IMPORTANT: Beware that changing an allowance with this method brings the risk
+     * that someone may use both the old and the new allowance by unfortunate
+     * transaction ordering. One possible solution to mitigate this race
+     * condition is to first reduce the spender's allowance to 0 and set the
+     * desired value afterwards:
+     * https://github.com/ethereum/EIPs/issues/20#issuecomment-263524729
+     *
+     * Emits an {Approval} event.
+     */
+    function approve(address spender, uint256 amount) external returns (bool);
+
+    /**
+     * @dev Moves `amount` tokens from `sender` to `recipient` using the
+     * allowance mechanism. `amount` is then deducted from the caller's
+     * allowance.
+     *
+     * Returns a boolean value indicating whether the operation succeeded.
+     *
+     * Emits a {Transfer} event.
+     */
+    function transferFrom(address sender, address recipient, uint256 amount) external returns (bool);
+
+    /**
+     * @dev Emitted when `value` tokens are moved from one account (`from`) to
+     * another (`to`).
+     *
+     * Note that `value` may be zero.
+     */
+    event Transfer(address indexed from, address indexed to, uint256 value);
+
+    /**
+     * @dev Emitted when the allowance of a `spender` for an `owner` is set by
+     * a call to {approve}. `value` is the new allowance.
+     */
+    event Approval(address indexed owner, address indexed spender, uint256 value);
+}
+
+interface IMdx is IERC20 {
+    function mint(address to, uint256 amount) external returns (bool);
+}
+
+interface ICzzSwap is IERC20 {
+    function mint(address _to, uint256 _amount) external;
+    function burn(address _account, uint256 _amount) external;
+    function transferOwnership(address newOwner) external;
+}
+
+interface IUniswapV2Router02 {
+    function getAmountsOut(uint256 amountIn, address[] calldata path) external view returns (uint256[] memory amounts);
+    function swapExactTokensForTokens(
+        uint amountIn,
+        uint amountOutMin,
+        address[] calldata path,
+        address to,
+        uint deadline
+    ) external returns (uint[] memory amounts);
+}
+
+abstract contract Context {
+    function _msgSender() internal view virtual returns (address) {
+        return msg.sender;
+    }
+
+    function _msgData() internal view virtual returns (bytes calldata) {
+        this; // silence state mutability warning without generating bytecode - see https://github.com/ethereum/solidity/issues/2691
+        return msg.data;
+    }
+}
+abstract contract Ownable is Context {
+    address private _owner;
+
+    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
+
+    /**
+     * @dev Initializes the contract setting the deployer as the initial owner.
+     */
+    constructor () {
+        address msgSender = _msgSender();
+        _owner = msgSender;
+        emit OwnershipTransferred(address(0), msgSender);
+    }
+
+    /**
+     * @dev Returns the address of the current owner.
+     */
+    function owner() public view virtual returns (address) {
+        return _owner;
+    }
+
+    /**
+     * @dev Throws if called by any account other than the owner.
+     */
+    modifier onlyOwner() {
+        require(owner() == _msgSender(), "Ownable: caller is not the owner");
+        _;
+    }
+
+    /**
+     * @dev Leaves the contract without owner. It will not be possible to call
+     * `onlyOwner` functions anymore. Can only be called by the current owner.
+     *
+     * NOTE: Renouncing ownership will leave the contract without an owner,
+     * thereby removing any functionality that is only available to the owner.
+     */
+    function renounceOwnership() public virtual onlyOwner {
+        emit OwnershipTransferred(_owner, address(0));
+        _owner = address(0);
+    }
+
+    /**
+     * @dev Transfers ownership of the contract to a new account (`newOwner`).
+     * Can only be called by the current owner.
+     */
+    function transferOwnership(address newOwner) public virtual onlyOwner {
+        require(newOwner != address(0), "Ownable: new owner is the zero address");
+        emit OwnershipTransferred(_owner, newOwner);
+        _owner = newOwner;
+    }
 }
 
 contract HecoPool is Ownable {
     using SafeMath for uint256;
     using SafeERC20 for IERC20;
 
-    using EnumerableSet for EnumerableSet.AddressSet;
-    EnumerableSet.AddressSet private _multLP;
-
+    mapping (address => uint8) private managers;
     // Info of each user.
     struct UserInfo {
         uint256 amount;     // How many LP tokens the user has provided.
         uint256 rewardDebt; // Reward debt.
-        uint256 multLpRewardDebt; //multLp Reward debt.
+        uint256 pendingAmount; // 
     }
 
     // Info of each pool.
     struct PoolInfo {
         IERC20 lpToken;           // Address of LP token contract.
         uint256 allocPoint;       // How many allocation points assigned to this pool. MDXs to distribute per block.
-        uint256 lastRewardBlock;  // Last block number that MDXs distribution occurs.
         uint256 accMdxPerShare; // Accumulated MDXs per share, times 1e12.
-        uint256 accMultLpPerShare; //Accumulated multLp per share
         uint256 totalAmount;    // Total amount of current pool deposit.
+        uint256 totalPendingReward ;
     }
 
     // The MDX Token!
     IMdx public mdx;
-    // MDX tokens created per block.
-    uint256 public mdxPerBlock;
     // Info of each pool.
     PoolInfo[] public poolInfo;
     // Info of each user that stakes LP tokens.
@@ -56,115 +188,53 @@ contract HecoPool is Ownable {
     mapping(address => uint256) public LpOfPid;
     // Control mining
     bool public paused = false;
-    // Total allocation points. Must be the sum of all allocation points in all pools.
-    uint256 public totalAllocPoint = 0;
-    // The block number when MDX mining starts.
-    uint256 public startBlock;
-    // multLP MasterChef
-    address public multLpChef;
-    // multLP Token
-    address public multLpToken;
-    // How many blocks are halved
-    uint256 public halvingPeriod = 5256000;
 
+    
+ 
     event Deposit(address indexed user, uint256 indexed pid, uint256 amount);
     event Withdraw(address indexed user, uint256 indexed pid, uint256 amount);
     event EmergencyWithdraw(address indexed user, uint256 indexed pid, uint256 amount);
 
+    modifier isManager {
+        require(
+            msg.sender == owner() || managers[msg.sender] == 1);
+        _;
+    }
     constructor(
-        IMdx _mdx,
-        uint256 _mdxPerBlock,
-        uint256 _startBlock
+        IMdx _mdx
     ) public {
         mdx = _mdx;
-        mdxPerBlock = _mdxPerBlock;
-        startBlock = _startBlock;
     }
 
-    function setHalvingPeriod(uint256 _block) public onlyOwner {
-        halvingPeriod = _block;
+    function addManager(address manager) public onlyOwner{
+        managers[manager] = 1;
+    }
+    
+    function removeManager(address manager) public onlyOwner{
+        managers[manager] = 0;
     }
 
-    // Set the number of mdx produced by each block
-    function setMdxPerBlock(uint256 _newPerBlock) public onlyOwner {
-        massUpdatePools();
-        mdxPerBlock = _newPerBlock;
-    }
 
     function poolLength() public view returns (uint256) {
         return poolInfo.length;
     }
 
-    function addMultLP(address _addLP) public onlyOwner returns (bool) {
-        require(_addLP != address(0), "LP is the zero address");
-        IERC20(_addLP).approve(multLpChef, uint256(0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff));
-        return EnumerableSet.add(_multLP, _addLP);
-    }
-
-    function isMultLP(address _LP) public view returns (bool) {
-        return EnumerableSet.contains(_multLP, _LP);
-    }
-
-    function getMultLPLength() public view returns (uint256) {
-        return EnumerableSet.length(_multLP);
-    }
-
-    function getMultLPAddress(uint256 _pid) public view returns (address){
-        require(_pid <= getMultLPLength() - 1, "not find this multLP");
-        return EnumerableSet.at(_multLP, _pid);
-    }
-
-    function setPause() public onlyOwner {
-        paused = !paused;
-    }
-
-    function setMultLP(address _multLpToken, address _multLpChef) public onlyOwner {
-        require(_multLpToken != address(0) && _multLpChef != address(0), "is the zero address");
-        multLpToken = _multLpToken;
-        multLpChef = _multLpChef;
-    }
-
-    function replaceMultLP(address _multLpToken, address _multLpChef) public onlyOwner {
-        require(_multLpToken != address(0) && _multLpChef != address(0), "is the zero address");
-        require(paused == true, "No mining suspension");
-        multLpToken = _multLpToken;
-        multLpChef = _multLpChef;
-        uint256 length = getMultLPLength();
-        while (length > 0) {
-            address dAddress = EnumerableSet.at(_multLP, 0);
-            uint256 pid = LpOfPid[dAddress];
-            IMasterChefHeco(multLpChef).emergencyWithdraw(poolCorrespond[pid]);
-            EnumerableSet.remove(_multLP, dAddress);
-            length--;
-        }
-    }
-
     // Add a new lp to the pool. Can only be called by the owner.
     // XXX DO NOT add the same LP token more than once. Rewards will be messed up if you do.
-    function add(uint256 _allocPoint, IERC20 _lpToken, bool _withUpdate) public onlyOwner {
+    function add(uint256 _allocPoint, IERC20 _lpToken) public onlyOwner {
         require(address(_lpToken) != address(0), "_lpToken is the zero address");
-        if (_withUpdate) {
-            massUpdatePools();
-        }
-        uint256 lastRewardBlock = block.number > startBlock ? block.number : startBlock;
-        totalAllocPoint = totalAllocPoint.add(_allocPoint);
         poolInfo.push(PoolInfo({
         lpToken : _lpToken,
         allocPoint : _allocPoint,
-        lastRewardBlock : lastRewardBlock,
         accMdxPerShare : 0,
-        accMultLpPerShare : 0,
-        totalAmount : 0
+        totalAmount : 0,
+        totalPendingReward : 0
         }));
         LpOfPid[address(_lpToken)] = poolLength() - 1;
     }
 
     // Update the given pool's MDX allocation point. Can only be called by the owner.
-    function set(uint256 _pid, uint256 _allocPoint, bool _withUpdate) public onlyOwner {
-        if (_withUpdate) {
-            massUpdatePools();
-        }
-        totalAllocPoint = totalAllocPoint.sub(poolInfo[_pid].allocPoint).add(_allocPoint);
+    function set(uint256 _pid, uint256 _allocPoint) public onlyOwner {
         poolInfo[_pid].allocPoint = _allocPoint;
     }
 
@@ -174,123 +244,36 @@ contract HecoPool is Ownable {
         poolCorrespond[_pid] = _sid;
     }
 
-    function phase(uint256 blockNumber) public view returns (uint256) {
-        if (halvingPeriod == 0) {
-            return 0;
-        }
-        if (blockNumber > startBlock) {
-            return (blockNumber.sub(startBlock).sub(1)).div(halvingPeriod);
-        }
-        return 0;
-    }
-
-    function reward(uint256 blockNumber) public view returns (uint256) {
-        uint256 _phase = phase(blockNumber);
-        return mdxPerBlock.div(2 ** _phase);
-    }
-
-    function getMdxBlockReward(uint256 _lastRewardBlock) public view returns (uint256) {
-        uint256 blockReward = 0;
-        uint256 n = phase(_lastRewardBlock);
-        uint256 m = phase(block.number);
-        while (n < m) {
-            n++;
-            uint256 r = n.mul(halvingPeriod).add(startBlock);
-            blockReward = blockReward.add((r.sub(_lastRewardBlock)).mul(reward(r)));
-            _lastRewardBlock = r;
-        }
-        blockReward = blockReward.add((block.number.sub(_lastRewardBlock)).mul(reward(block.number)));
-        return blockReward;
-    }
-
-    // Update reward variables for all pools. Be careful of gas spending!
-    function massUpdatePools() public {
-        uint256 length = poolInfo.length;
-        for (uint256 pid = 0; pid < length; ++pid) {
-            updatePool(pid);
-        }
-    }
-
     // Update reward variables of the given pool to be up-to-date.
     function updatePool(uint256 _pid) public {
         PoolInfo storage pool = poolInfo[_pid];
-        if (block.number <= pool.lastRewardBlock) {
-            return;
-        }
         uint256 lpSupply;
-        if (isMultLP(address(pool.lpToken))) {
-            if (pool.totalAmount == 0) {
-                pool.lastRewardBlock = block.number;
-                return;
-            }
-            lpSupply = pool.totalAmount;
-        } else {
-            lpSupply = pool.lpToken.balanceOf(address(this));
-            if (lpSupply == 0) {
-                pool.lastRewardBlock = block.number;
-                return;
-            }
-        }
-        uint256 blockReward = getMdxBlockReward(pool.lastRewardBlock);
-        if (blockReward <= 0) {
+        lpSupply = pool.totalAmount;
+        if (lpSupply == 0) {
             return;
         }
-        uint256 mdxReward = blockReward.mul(pool.allocPoint).div(totalAllocPoint);
-        bool minRet = mdx.mint(address(this), mdxReward);
-        if (minRet) {
-            pool.accMdxPerShare = pool.accMdxPerShare.add(mdxReward.mul(1e12).div(lpSupply));
+        uint256 mdxReward = pool.totalPendingReward;
+        if (mdxReward != 0) {
+            pool.accMdxPerShare = pool.accMdxPerShare.add(mdxReward.div(lpSupply));
         }
-        pool.lastRewardBlock = block.number;
+        pool.totalPendingReward = 0;
     }
 
     // View function to see pending MDXs on frontend.
     function pending(uint256 _pid, address _user) external view returns (uint256, uint256){
-        PoolInfo storage pool = poolInfo[_pid];
-        if (isMultLP(address(pool.lpToken))) {
-            (uint256 mdxAmount, uint256 tokenAmount) = pendingMdxAndToken(_pid, _user);
-            return (mdxAmount, tokenAmount);
-        } else {
-            uint256 mdxAmount = pendingMdx(_pid, _user);
-            return (mdxAmount, 0);
-        }
-    }
+        uint256 mdxAmount = pendingMdx(_pid, _user);
+        return (mdxAmount, 0);
 
-    function pendingMdxAndToken(uint256 _pid, address _user) private view returns (uint256, uint256){
-        PoolInfo storage pool = poolInfo[_pid];
-        UserInfo storage user = userInfo[_pid][_user];
-        uint256 accMdxPerShare = pool.accMdxPerShare;
-        uint256 accMultLpPerShare = pool.accMultLpPerShare;
-        if (user.amount > 0) {
-            uint256 TokenPending = IMasterChefHeco(multLpChef).pending(poolCorrespond[_pid], address(this));
-            accMultLpPerShare = accMultLpPerShare.add(TokenPending.mul(1e12).div(pool.totalAmount));
-            uint256 userPending = user.amount.mul(accMultLpPerShare).div(1e12).sub(user.multLpRewardDebt);
-            if (block.number > pool.lastRewardBlock) {
-                uint256 blockReward = getMdxBlockReward(pool.lastRewardBlock);
-                uint256 mdxReward = blockReward.mul(pool.allocPoint).div(totalAllocPoint);
-                accMdxPerShare = accMdxPerShare.add(mdxReward.mul(1e12).div(pool.totalAmount));
-                return (user.amount.mul(accMdxPerShare).div(1e12).sub(user.rewardDebt), userPending);
-            }
-            if (block.number == pool.lastRewardBlock) {
-                return (user.amount.mul(accMdxPerShare).div(1e12).sub(user.rewardDebt), userPending);
-            }
-        }
-        return (0, 0);
     }
 
     function pendingMdx(uint256 _pid, address _user) private view returns (uint256){
         PoolInfo storage pool = poolInfo[_pid];
         UserInfo storage user = userInfo[_pid][_user];
-        uint256 accMdxPerShare = pool.accMdxPerShare;
-        uint256 lpSupply = pool.lpToken.balanceOf(address(this));
         if (user.amount > 0) {
-            if (block.number > pool.lastRewardBlock) {
-                uint256 blockReward = getMdxBlockReward(pool.lastRewardBlock);
-                uint256 mdxReward = blockReward.mul(pool.allocPoint).div(totalAllocPoint);
-                accMdxPerShare = accMdxPerShare.add(mdxReward.mul(1e12).div(lpSupply));
-                return user.amount.mul(accMdxPerShare).div(1e12).sub(user.rewardDebt);
-            }
-            if (block.number == pool.lastRewardBlock) {
-                return user.amount.mul(accMdxPerShare).div(1e12).sub(user.rewardDebt);
+            uint256 mdxReward = pool.totalPendingReward;
+            if (mdxReward != 0) {
+                uint256 accMdxPerShare = pool.accMdxPerShare.add(mdxReward.div(pool.totalAmount));
+                return user.amount.mul(accMdxPerShare);
             }
         }
         return 0;
@@ -298,50 +281,8 @@ contract HecoPool is Ownable {
 
     // Deposit LP tokens to HecoPool for MDX allocation.
     function deposit(uint256 _pid, uint256 _amount) public notPause {
-        PoolInfo storage pool = poolInfo[_pid];
-        if (isMultLP(address(pool.lpToken))) {
-            depositMdxAndToken(_pid, _amount, msg.sender);
-        } else {
-            depositMdx(_pid, _amount, msg.sender);
-        }
-    }
+        depositMdx(_pid, _amount, msg.sender);
 
-    function depositMdxAndToken(uint256 _pid, uint256 _amount, address _user) private {
-        PoolInfo storage pool = poolInfo[_pid];
-        UserInfo storage user = userInfo[_pid][_user];
-        updatePool(_pid);
-        if (user.amount > 0) {
-            uint256 pendingAmount = user.amount.mul(pool.accMdxPerShare).div(1e12).sub(user.rewardDebt);
-            if (pendingAmount > 0) {
-                safeMdxTransfer(_user, pendingAmount);
-            }
-            uint256 beforeToken = IERC20(multLpToken).balanceOf(address(this));
-            IMasterChefHeco(multLpChef).deposit(poolCorrespond[_pid], 0);
-            uint256 afterToken = IERC20(multLpToken).balanceOf(address(this));
-            pool.accMultLpPerShare = pool.accMultLpPerShare.add(afterToken.sub(beforeToken).mul(1e12).div(pool.totalAmount));
-            uint256 tokenPending = user.amount.mul(pool.accMultLpPerShare).div(1e12).sub(user.multLpRewardDebt);
-            if (tokenPending > 0) {
-                IERC20(multLpToken).safeTransfer(_user, tokenPending);
-            }
-        }
-        if (_amount > 0) {
-            pool.lpToken.safeTransferFrom(_user, address(this), _amount);
-            if (pool.totalAmount == 0) {
-                IMasterChefHeco(multLpChef).deposit(poolCorrespond[_pid], _amount);
-                user.amount = user.amount.add(_amount);
-                pool.totalAmount = pool.totalAmount.add(_amount);
-            } else {
-                uint256 beforeToken = IERC20(multLpToken).balanceOf(address(this));
-                IMasterChefHeco(multLpChef).deposit(poolCorrespond[_pid], _amount);
-                uint256 afterToken = IERC20(multLpToken).balanceOf(address(this));
-                pool.accMultLpPerShare = pool.accMultLpPerShare.add(afterToken.sub(beforeToken).mul(1e12).div(pool.totalAmount));
-                user.amount = user.amount.add(_amount);
-                pool.totalAmount = pool.totalAmount.add(_amount);
-            }
-        }
-        user.rewardDebt = user.amount.mul(pool.accMdxPerShare).div(1e12);
-        user.multLpRewardDebt = user.amount.mul(pool.accMultLpPerShare).div(1e12);
-        emit Deposit(_user, _pid, _amount);
     }
 
     function depositMdx(uint256 _pid, uint256 _amount, address _user) private {
@@ -349,7 +290,7 @@ contract HecoPool is Ownable {
         UserInfo storage user = userInfo[_pid][_user];
         updatePool(_pid);
         if (user.amount > 0) {
-            uint256 pendingAmount = user.amount.mul(pool.accMdxPerShare).div(1e12).sub(user.rewardDebt);
+            uint256 pendingAmount = user.amount.mul(pool.accMdxPerShare).sub(user.rewardDebt);
             if (pendingAmount > 0) {
                 safeMdxTransfer(_user, pendingAmount);
             }
@@ -365,39 +306,7 @@ contract HecoPool is Ownable {
 
     // Withdraw LP tokens from HecoPool.
     function withdraw(uint256 _pid, uint256 _amount) public notPause {
-        PoolInfo storage pool = poolInfo[_pid];
-        if (isMultLP(address(pool.lpToken))) {
-            withdrawMdxAndToken(_pid, _amount, msg.sender);
-        } else {
-            withdrawMdx(_pid, _amount, msg.sender);
-        }
-    }
-
-    function withdrawMdxAndToken(uint256 _pid, uint256 _amount, address _user) private {
-        PoolInfo storage pool = poolInfo[_pid];
-        UserInfo storage user = userInfo[_pid][_user];
-        require(user.amount >= _amount, "withdrawMdxAndToken: not good");
-        updatePool(_pid);
-        uint256 pendingAmount = user.amount.mul(pool.accMdxPerShare).div(1e12).sub(user.rewardDebt);
-        if (pendingAmount > 0) {
-            safeMdxTransfer(_user, pendingAmount);
-        }
-        if (_amount > 0) {
-            uint256 beforeToken = IERC20(multLpToken).balanceOf(address(this));
-            IMasterChefHeco(multLpChef).withdraw(poolCorrespond[_pid], _amount);
-            uint256 afterToken = IERC20(multLpToken).balanceOf(address(this));
-            pool.accMultLpPerShare = pool.accMultLpPerShare.add(afterToken.sub(beforeToken).mul(1e12).div(pool.totalAmount));
-            uint256 tokenPending = user.amount.mul(pool.accMultLpPerShare).div(1e12).sub(user.multLpRewardDebt);
-            if (tokenPending > 0) {
-                IERC20(multLpToken).safeTransfer(_user, tokenPending);
-            }
-            user.amount = user.amount.sub(_amount);
-            pool.totalAmount = pool.totalAmount.sub(_amount);
-            pool.lpToken.safeTransfer(_user, _amount);
-        }
-        user.rewardDebt = user.amount.mul(pool.accMdxPerShare).div(1e12);
-        user.multLpRewardDebt = user.amount.mul(pool.accMultLpPerShare).div(1e12);
-        emit Withdraw(_user, _pid, _amount);
+        withdrawMdx(_pid, _amount, msg.sender);
     }
 
     function withdrawMdx(uint256 _pid, uint256 _amount, address _user) private {
@@ -405,7 +314,7 @@ contract HecoPool is Ownable {
         UserInfo storage user = userInfo[_pid][_user];
         require(user.amount >= _amount, "withdrawMdx: not good");
         updatePool(_pid);
-        uint256 pendingAmount = user.amount.mul(pool.accMdxPerShare).div(1e12).sub(user.rewardDebt);
+        uint256 pendingAmount = user.amount.mul(pool.accMdxPerShare).sub(user.rewardDebt);
         if (pendingAmount > 0) {
             safeMdxTransfer(_user, pendingAmount);
         }
@@ -414,33 +323,13 @@ contract HecoPool is Ownable {
             pool.totalAmount = pool.totalAmount.sub(_amount);
             pool.lpToken.safeTransfer(_user, _amount);
         }
-        user.rewardDebt = user.amount.mul(pool.accMdxPerShare).div(1e12);
+        user.rewardDebt = user.amount.mul(pool.accMdxPerShare);
         emit Withdraw(_user, _pid, _amount);
     }
 
     // Withdraw without caring about rewards. EMERGENCY ONLY.
     function emergencyWithdraw(uint256 _pid) public notPause {
-        PoolInfo storage pool = poolInfo[_pid];
-        if (isMultLP(address(pool.lpToken))) {
-            emergencyWithdrawMdxAndToken(_pid, msg.sender);
-        } else {
-            emergencyWithdrawMdx(_pid, msg.sender);
-        }
-    }
-
-    function emergencyWithdrawMdxAndToken(uint256 _pid, address _user) private {
-        PoolInfo storage pool = poolInfo[_pid];
-        UserInfo storage user = userInfo[_pid][_user];
-        uint256 amount = user.amount;
-        uint256 beforeToken = IERC20(multLpToken).balanceOf(address(this));
-        IMasterChefHeco(multLpChef).withdraw(poolCorrespond[_pid], amount);
-        uint256 afterToken = IERC20(multLpToken).balanceOf(address(this));
-        pool.accMultLpPerShare = pool.accMultLpPerShare.add(afterToken.sub(beforeToken).mul(1e12).div(pool.totalAmount));
-        user.amount = 0;
-        user.rewardDebt = 0;
-        pool.lpToken.safeTransfer(_user, amount);
-        pool.totalAmount = pool.totalAmount.sub(amount);
-        emit EmergencyWithdraw(_user, _pid, amount);
+        emergencyWithdrawMdx(_pid, msg.sender);
     }
 
     function emergencyWithdrawMdx(uint256 _pid, address _user) private {
@@ -464,8 +353,550 @@ contract HecoPool is Ownable {
         }
     }
 
+
     modifier notPause() {
         require(paused == false, "Mining has been suspended");
         _;
+    }
+
+    function getReward() public view isManager returns (uint256) {
+        uint256 _Reward = 0;
+        return _Reward;
+    }
+
+    function addReward(uint256 _pid, uint256 _Reward) internal isManager{
+        PoolInfo storage pool = poolInfo[_pid];
+        pool.totalPendingReward = pool.totalPendingReward + _Reward;
+
+    }
+
+
+    function securityPoolSwap(
+        uint amountIn,
+        uint amountOutMin,
+        address[] memory path,
+        uint256 gas,
+        address to,
+        address routerAddr,
+        uint deadline
+        ) public isManager {
+      
+        address uniswap_token = routerAddr;  //CONTRACT_ADDRESS
+        
+        //Calculation of reward !!!
+        uint _amountIn = 0;
+        if(gas == 0) {
+            _amountIn = amountIn.mul(999).div(1000);
+        }
+
+        //bytes4 id = bytes4(keccak256(bytes('swapExactTokensForTokens(uint256,uint256,address[],address,uint256)')));
+        //(bool success, ) = uniswap_token.delegatecall(abi.encodeWithSelector(0x38ed1739, amountIn, amountOutMin,path,to,deadline));
+        (bool success, ) = uniswap_token.call(abi.encodeWithSelector(0x38ed1739, _amountIn, amountOutMin,path,to,deadline));
+        require(
+            success ,'uniswap_token::uniswap_token: uniswap_token failed'
+        );
+    }
+
+    function securityPoolSwapEth(
+        uint amountIn,
+        uint amountOurMin,
+        address[] memory path,
+        uint256 gas,
+        address to, 
+        address routerAddr,
+        uint deadline
+        ) public isManager {
+        
+
+        address uniswap_token = routerAddr;  //CONTRACT_ADDRESS
+        
+        //Calculation of reward !!!
+        uint _amountIn = 0;
+        if(gas == 0) {
+            _amountIn = amountIn.mul(999).div(1000);
+        }
+        //bytes4 id = bytes4(keccak256(bytes('swapExactTokensForETH(uint256,uint256,address[],address,uint256)')));
+        (bool success, ) = uniswap_token.call(abi.encodeWithSelector(0x18cbafe5, _amountIn, amountOurMin, path,to,deadline));
+        require(
+            success ,'uniswap_token::uniswap_token: uniswap_token_eth failed'
+        );
+    }
+
+    function securityPoolSwapGetAmount(uint256 amountOut, address[] memory path, address routerAddr) public view returns (uint[] memory amounts){
+        require(address(0) != routerAddr); 
+        ////Calculation of reward!!
+        uint256 _amountOut = amountOut.mul(999).div(1000);
+
+        return IUniswapV2Router02(routerAddr).getAmountsOut(_amountOut,path);
+    }
+
+    
+
+    function securityPoolMint(uint256 _swapAmount, address _token) public isManager {
+        
+        ICzzSwap(_token).mint(address(this), _swapAmount); 
+
+        //Calculation of reward!!
+        addReward(0,_swapAmount.div(1000));
+    }
+
+    function securityPoolTransfer(uint256 _amount, address _token, address _to) public isManager {
+         (bool success) = ICzzSwap(_token).transfer(_to, _amount); 
+         require(success, 'securityPoolTransfer: TRANSFER_FAILED');
+    }
+
+    function securityPoolTransferEth(uint256 _amount, address _to) public isManager {
+        (bool success,) = _to.call{value:_amount}(new bytes(0));
+        require(success, 'securityPoolTransferEth: ETH_TRANSFER_FAILED');
+    }
+}
+
+library SafeMath {
+    /**
+     * @dev Returns the addition of two unsigned integers, with an overflow flag.
+     *
+     * _Available since v3.4._
+     */
+    function tryAdd(uint256 a, uint256 b) internal pure returns (bool, uint256) {
+        unchecked {
+            uint256 c = a + b;
+            if (c < a) return (false, 0);
+            return (true, c);
+        }
+    }
+
+    /**
+     * @dev Returns the substraction of two unsigned integers, with an overflow flag.
+     *
+     * _Available since v3.4._
+     */
+    function trySub(uint256 a, uint256 b) internal pure returns (bool, uint256) {
+        unchecked {
+            if (b > a) return (false, 0);
+            return (true, a - b);
+        }
+    }
+
+    /**
+     * @dev Returns the multiplication of two unsigned integers, with an overflow flag.
+     *
+     * _Available since v3.4._
+     */
+    function tryMul(uint256 a, uint256 b) internal pure returns (bool, uint256) {
+        unchecked {
+            // Gas optimization: this is cheaper than requiring 'a' not being zero, but the
+            // benefit is lost if 'b' is also tested.
+            // See: https://github.com/OpenZeppelin/openzeppelin-contracts/pull/522
+            if (a == 0) return (true, 0);
+            uint256 c = a * b;
+            if (c / a != b) return (false, 0);
+            return (true, c);
+        }
+    }
+
+    /**
+     * @dev Returns the division of two unsigned integers, with a division by zero flag.
+     *
+     * _Available since v3.4._
+     */
+    function tryDiv(uint256 a, uint256 b) internal pure returns (bool, uint256) {
+        unchecked {
+            if (b == 0) return (false, 0);
+            return (true, a / b);
+        }
+    }
+
+    /**
+     * @dev Returns the remainder of dividing two unsigned integers, with a division by zero flag.
+     *
+     * _Available since v3.4._
+     */
+    function tryMod(uint256 a, uint256 b) internal pure returns (bool, uint256) {
+        unchecked {
+            if (b == 0) return (false, 0);
+            return (true, a % b);
+        }
+    }
+
+    /**
+     * @dev Returns the addition of two unsigned integers, reverting on
+     * overflow.
+     *
+     * Counterpart to Solidity's `+` operator.
+     *
+     * Requirements:
+     *
+     * - Addition cannot overflow.
+     */
+    function add(uint256 a, uint256 b) internal pure returns (uint256) {
+        return a + b;
+    }
+
+    /**
+     * @dev Returns the subtraction of two unsigned integers, reverting on
+     * overflow (when the result is negative).
+     *
+     * Counterpart to Solidity's `-` operator.
+     *
+     * Requirements:
+     *
+     * - Subtraction cannot overflow.
+     */
+    function sub(uint256 a, uint256 b) internal pure returns (uint256) {
+        return a - b;
+    }
+
+    /**
+     * @dev Returns the multiplication of two unsigned integers, reverting on
+     * overflow.
+     *
+     * Counterpart to Solidity's `*` operator.
+     *
+     * Requirements:
+     *
+     * - Multiplication cannot overflow.
+     */
+    function mul(uint256 a, uint256 b) internal pure returns (uint256) {
+        return a * b;
+    }
+
+    /**
+     * @dev Returns the integer division of two unsigned integers, reverting on
+     * division by zero. The result is rounded towards zero.
+     *
+     * Counterpart to Solidity's `/` operator.
+     *
+     * Requirements:
+     *
+     * - The divisor cannot be zero.
+     */
+    function div(uint256 a, uint256 b) internal pure returns (uint256) {
+        return a / b;
+    }
+
+    /**
+     * @dev Returns the remainder of dividing two unsigned integers. (unsigned integer modulo),
+     * reverting when dividing by zero.
+     *
+     * Counterpart to Solidity's `%` operator. This function uses a `revert`
+     * opcode (which leaves remaining gas untouched) while Solidity uses an
+     * invalid opcode to revert (consuming all remaining gas).
+     *
+     * Requirements:
+     *
+     * - The divisor cannot be zero.
+     */
+    function mod(uint256 a, uint256 b) internal pure returns (uint256) {
+        return a % b;
+    }
+
+    /**
+     * @dev Returns the subtraction of two unsigned integers, reverting with custom message on
+     * overflow (when the result is negative).
+     *
+     * CAUTION: This function is deprecated because it requires allocating memory for the error
+     * message unnecessarily. For custom revert reasons use {trySub}.
+     *
+     * Counterpart to Solidity's `-` operator.
+     *
+     * Requirements:
+     *
+     * - Subtraction cannot overflow.
+     */
+    function sub(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {
+        unchecked {
+            require(b <= a, errorMessage);
+            return a - b;
+        }
+    }
+
+    /**
+     * @dev Returns the integer division of two unsigned integers, reverting with custom message on
+     * division by zero. The result is rounded towards zero.
+     *
+     * Counterpart to Solidity's `%` operator. This function uses a `revert`
+     * opcode (which leaves remaining gas untouched) while Solidity uses an
+     * invalid opcode to revert (consuming all remaining gas).
+     *
+     * Counterpart to Solidity's `/` operator. Note: this function uses a
+     * `revert` opcode (which leaves remaining gas untouched) while Solidity
+     * uses an invalid opcode to revert (consuming all remaining gas).
+     *
+     * Requirements:
+     *
+     * - The divisor cannot be zero.
+     */
+    function div(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {
+        unchecked {
+            require(b > 0, errorMessage);
+            return a / b;
+        }
+    }
+
+    /**
+     * @dev Returns the remainder of dividing two unsigned integers. (unsigned integer modulo),
+     * reverting with custom message when dividing by zero.
+     *
+     * CAUTION: This function is deprecated because it requires allocating memory for the error
+     * message unnecessarily. For custom revert reasons use {tryMod}.
+     *
+     * Counterpart to Solidity's `%` operator. This function uses a `revert`
+     * opcode (which leaves remaining gas untouched) while Solidity uses an
+     * invalid opcode to revert (consuming all remaining gas).
+     *
+     * Requirements:
+     *
+     * - The divisor cannot be zero.
+     */
+    function mod(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {
+        unchecked {
+            require(b > 0, errorMessage);
+            return a % b;
+        }
+    }
+}
+
+library Address {
+    /**
+     * @dev Returns true if `account` is a contract.
+     *
+     * [IMPORTANT]
+     * ====
+     * It is unsafe to assume that an address for which this function returns
+     * false is an externally-owned account (EOA) and not a contract.
+     *
+     * Among others, `isContract` will return false for the following
+     * types of addresses:
+     *
+     *  - an externally-owned account
+     *  - a contract in construction
+     *  - an address where a contract will be created
+     *  - an address where a contract lived, but was destroyed
+     * ====
+     */
+    function isContract(address account) internal view returns (bool) {
+        // This method relies on extcodesize, which returns 0 for contracts in
+        // construction, since the code is only stored at the end of the
+        // constructor execution.
+
+        uint256 size;
+        // solhint-disable-next-line no-inline-assembly
+        assembly { size := extcodesize(account) }
+        return size > 0;
+    }
+
+    /**
+     * @dev Replacement for Solidity's `transfer`: sends `amount` wei to
+     * `recipient`, forwarding all available gas and reverting on errors.
+     *
+     * https://eips.ethereum.org/EIPS/eip-1884[EIP1884] increases the gas cost
+     * of certain opcodes, possibly making contracts go over the 2300 gas limit
+     * imposed by `transfer`, making them unable to receive funds via
+     * `transfer`. {sendValue} removes this limitation.
+     *
+     * https://diligence.consensys.net/posts/2019/09/stop-using-soliditys-transfer-now/[Learn more].
+     *
+     * IMPORTANT: because control is transferred to `recipient`, care must be
+     * taken to not create reentrancy vulnerabilities. Consider using
+     * {ReentrancyGuard} or the
+     * https://solidity.readthedocs.io/en/v0.5.11/security-considerations.html#use-the-checks-effects-interactions-pattern[checks-effects-interactions pattern].
+     */
+    function sendValue(address payable recipient, uint256 amount) internal {
+        require(address(this).balance >= amount, "Address: insufficient balance");
+
+        // solhint-disable-next-line avoid-low-level-calls, avoid-call-value
+        (bool success, ) = recipient.call{ value: amount }("");
+        require(success, "Address: unable to send value, recipient may have reverted");
+    }
+
+    /**
+     * @dev Performs a Solidity function call using a low level `call`. A
+     * plain`call` is an unsafe replacement for a function call: use this
+     * function instead.
+     *
+     * If `target` reverts with a revert reason, it is bubbled up by this
+     * function (like regular Solidity function calls).
+     *
+     * Returns the raw returned data. To convert to the expected return value,
+     * use https://solidity.readthedocs.io/en/latest/units-and-global-variables.html?highlight=abi.decode#abi-encoding-and-decoding-functions[`abi.decode`].
+     *
+     * Requirements:
+     *
+     * - `target` must be a contract.
+     * - calling `target` with `data` must not revert.
+     *
+     * _Available since v3.1._
+     */
+    function functionCall(address target, bytes memory data) internal returns (bytes memory) {
+      return functionCall(target, data, "Address: low-level call failed");
+    }
+
+    /**
+     * @dev Same as {xref-Address-functionCall-address-bytes-}[`functionCall`], but with
+     * `errorMessage` as a fallback revert reason when `target` reverts.
+     *
+     * _Available since v3.1._
+     */
+    function functionCall(address target, bytes memory data, string memory errorMessage) internal returns (bytes memory) {
+        return functionCallWithValue(target, data, 0, errorMessage);
+    }
+
+    /**
+     * @dev Same as {xref-Address-functionCall-address-bytes-}[`functionCall`],
+     * but also transferring `value` wei to `target`.
+     *
+     * Requirements:
+     *
+     * - the calling contract must have an ETH balance of at least `value`.
+     * - the called Solidity function must be `payable`.
+     *
+     * _Available since v3.1._
+     */
+    function functionCallWithValue(address target, bytes memory data, uint256 value) internal returns (bytes memory) {
+        return functionCallWithValue(target, data, value, "Address: low-level call with value failed");
+    }
+
+    /**
+     * @dev Same as {xref-Address-functionCallWithValue-address-bytes-uint256-}[`functionCallWithValue`], but
+     * with `errorMessage` as a fallback revert reason when `target` reverts.
+     *
+     * _Available since v3.1._
+     */
+    function functionCallWithValue(address target, bytes memory data, uint256 value, string memory errorMessage) internal returns (bytes memory) {
+        require(address(this).balance >= value, "Address: insufficient balance for call");
+        require(isContract(target), "Address: call to non-contract");
+
+        // solhint-disable-next-line avoid-low-level-calls
+        (bool success, bytes memory returndata) = target.call{ value: value }(data);
+        return _verifyCallResult(success, returndata, errorMessage);
+    }
+
+    /**
+     * @dev Same as {xref-Address-functionCall-address-bytes-}[`functionCall`],
+     * but performing a static call.
+     *
+     * _Available since v3.3._
+     */
+    function functionStaticCall(address target, bytes memory data) internal view returns (bytes memory) {
+        return functionStaticCall(target, data, "Address: low-level static call failed");
+    }
+
+    /**
+     * @dev Same as {xref-Address-functionCall-address-bytes-string-}[`functionCall`],
+     * but performing a static call.
+     *
+     * _Available since v3.3._
+     */
+    function functionStaticCall(address target, bytes memory data, string memory errorMessage) internal view returns (bytes memory) {
+        require(isContract(target), "Address: static call to non-contract");
+
+        // solhint-disable-next-line avoid-low-level-calls
+        (bool success, bytes memory returndata) = target.staticcall(data);
+        return _verifyCallResult(success, returndata, errorMessage);
+    }
+
+    /**
+     * @dev Same as {xref-Address-functionCall-address-bytes-}[`functionCall`],
+     * but performing a delegate call.
+     *
+     * _Available since v3.4._
+     */
+    function functionDelegateCall(address target, bytes memory data) internal returns (bytes memory) {
+        return functionDelegateCall(target, data, "Address: low-level delegate call failed");
+    }
+
+    /**
+     * @dev Same as {xref-Address-functionCall-address-bytes-string-}[`functionCall`],
+     * but performing a delegate call.
+     *
+     * _Available since v3.4._
+     */
+    function functionDelegateCall(address target, bytes memory data, string memory errorMessage) internal returns (bytes memory) {
+        require(isContract(target), "Address: delegate call to non-contract");
+
+        // solhint-disable-next-line avoid-low-level-calls
+        (bool success, bytes memory returndata) = target.delegatecall(data);
+        return _verifyCallResult(success, returndata, errorMessage);
+    }
+
+    function _verifyCallResult(bool success, bytes memory returndata, string memory errorMessage) private pure returns(bytes memory) {
+        if (success) {
+            return returndata;
+        } else {
+            // Look for revert reason and bubble it up if present
+            if (returndata.length > 0) {
+                // The easiest way to bubble the revert reason is using memory via assembly
+
+                // solhint-disable-next-line no-inline-assembly
+                assembly {
+                    let returndata_size := mload(returndata)
+                    revert(add(32, returndata), returndata_size)
+                }
+            } else {
+                revert(errorMessage);
+            }
+        }
+    }
+}
+
+library SafeERC20 {
+    using Address for address;
+
+    function safeTransfer(IERC20 token, address to, uint256 value) internal {
+        _callOptionalReturn(token, abi.encodeWithSelector(token.transfer.selector, to, value));
+    }
+
+    function safeTransferFrom(IERC20 token, address from, address to, uint256 value) internal {
+        _callOptionalReturn(token, abi.encodeWithSelector(token.transferFrom.selector, from, to, value));
+    }
+
+    /**
+     * @dev Deprecated. This function has issues similar to the ones found in
+     * {IERC20-approve}, and its usage is discouraged.
+     *
+     * Whenever possible, use {safeIncreaseAllowance} and
+     * {safeDecreaseAllowance} instead.
+     */
+    function safeApprove(IERC20 token, address spender, uint256 value) internal {
+        // safeApprove should only be called when setting an initial allowance,
+        // or when resetting it to zero. To increase and decrease it, use
+        // 'safeIncreaseAllowance' and 'safeDecreaseAllowance'
+        // solhint-disable-next-line max-line-length
+        require((value == 0) || (token.allowance(address(this), spender) == 0),
+            "SafeERC20: approve from non-zero to non-zero allowance"
+        );
+        _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, value));
+    }
+
+    function safeIncreaseAllowance(IERC20 token, address spender, uint256 value) internal {
+        uint256 newAllowance = token.allowance(address(this), spender) + value;
+        _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, newAllowance));
+    }
+
+    function safeDecreaseAllowance(IERC20 token, address spender, uint256 value) internal {
+        unchecked {
+            uint256 oldAllowance = token.allowance(address(this), spender);
+            require(oldAllowance >= value, "SafeERC20: decreased allowance below zero");
+            uint256 newAllowance = oldAllowance - value;
+            _callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, newAllowance));
+        }
+    }
+
+    /**
+     * @dev Imitates a Solidity high-level call (i.e. a regular function call to a contract), relaxing the requirement
+     * on the return value: the return value is optional (but if data is returned, it must not be false).
+     * @param token The token targeted by the call.
+     * @param data The call data (encoded using abi.encode or one of its variants).
+     */
+    function _callOptionalReturn(IERC20 token, bytes memory data) private {
+        // We need to perform a low level call here, to bypass Solidity's return data size checking mechanism, since
+        // we're implementing it ourselves. We use {Address.functionCall} to perform this call, which verifies that
+        // the target address contains contract code and also asserts for success in the low-level call.
+
+        bytes memory returndata = address(token).functionCall(data, "SafeERC20: low-level call failed");
+        if (returndata.length > 0) { // Return data is optional
+            // solhint-disable-next-line max-line-length
+            require(abi.decode(returndata, (bool)), "SafeERC20: ERC20 operation did not succeed");
+        }
     }
 }
