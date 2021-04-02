@@ -155,7 +155,7 @@ abstract contract Ownable is Context {
     }
 }
 
-contract HecoPool is Ownable {
+contract CzzPool is Ownable {
     using SafeMath for uint256;
     using SafeERC20 for IERC20;
 
@@ -171,9 +171,11 @@ contract HecoPool is Ownable {
     struct PoolInfo {
         IERC20 lpToken;           // Address of LP token contract.
         uint256 allocPoint;       // How many allocation points assigned to this pool. MDXs to distribute per block.
+        uint256 allocPointDecimals;
         uint256 accMdxPerShare; // Accumulated MDXs per share, times 1e12.
         uint256 totalAmount;    // Total amount of current pool deposit.
         uint256 totalPendingReward ;
+        uint256 totalReward;
     }
 
     // The MDX Token!
@@ -188,6 +190,15 @@ contract HecoPool is Ownable {
     mapping(address => uint256) public LpOfPid;
     // Control mining
     bool public paused = false;
+    
+    uint256 public allocPointDecimals;
+    
+    uint256 public allocPoint;
+
+    uint256 depositMinValue;
+    
+    /////test
+    uint256 internal test  = 1;
 
     
  
@@ -200,10 +211,11 @@ contract HecoPool is Ownable {
             msg.sender == owner() || managers[msg.sender] == 1);
         _;
     }
-    constructor(
+    constructor (
         IMdx _mdx
     ) public {
         mdx = _mdx;
+        depositMinValue = 10 ** 13;
     }
 
     function addManager(address manager) public onlyOwner{
@@ -221,21 +233,28 @@ contract HecoPool is Ownable {
 
     // Add a new lp to the pool. Can only be called by the owner.
     // XXX DO NOT add the same LP token more than once. Rewards will be messed up if you do.
-    function add(uint256 _allocPoint, IERC20 _lpToken) public onlyOwner {
+    function add(uint256 _allocPoint, uint256 _allocPointDecimals, IERC20 _lpToken) public onlyOwner {
         require(address(_lpToken) != address(0), "_lpToken is the zero address");
         poolInfo.push(PoolInfo({
         lpToken : _lpToken,
         allocPoint : _allocPoint,
+        allocPointDecimals : _allocPointDecimals,
         accMdxPerShare : 0,
         totalAmount : 0,
-        totalPendingReward : 0
+        totalPendingReward : 0,
+        totalReward : 0
         }));
+        allocPoint = _allocPoint;
+        allocPointDecimals = _allocPointDecimals;
         LpOfPid[address(_lpToken)] = poolLength() - 1;
     }
 
     // Update the given pool's MDX allocation point. Can only be called by the owner.
-    function set(uint256 _pid, uint256 _allocPoint) public onlyOwner {
+    function set(uint256 _pid, uint256 _allocPoint, uint256 _allocPointDecimals) public onlyOwner {
         poolInfo[_pid].allocPoint = _allocPoint;
+        poolInfo[_pid].allocPointDecimals = _allocPointDecimals;
+        allocPoint = _allocPoint;
+        allocPointDecimals = _allocPointDecimals;
     }
 
     // The current pool corresponds to the pid of the multLP pool
@@ -254,8 +273,9 @@ contract HecoPool is Ownable {
         }
         uint256 mdxReward = pool.totalPendingReward;
         if (mdxReward != 0) {
-            pool.accMdxPerShare = pool.accMdxPerShare.add(mdxReward.div(lpSupply));
+            pool.accMdxPerShare = pool.accMdxPerShare.add(mdxReward.mul(1e12).div(lpSupply));
         }
+        pool.totalReward = pool.totalReward.add(pool.totalPendingReward);
         pool.totalPendingReward = 0;
     }
 
@@ -269,11 +289,16 @@ contract HecoPool is Ownable {
     function pendingMdx(uint256 _pid, address _user) private view returns (uint256){
         PoolInfo storage pool = poolInfo[_pid];
         UserInfo storage user = userInfo[_pid][_user];
+        uint256 accMdxPerShare = pool.accMdxPerShare;
+        uint256 lpSupply= pool.totalAmount;
+        if (lpSupply == 0) {
+            return 0;
+        }
         if (user.amount > 0) {
             uint256 mdxReward = pool.totalPendingReward;
             if (mdxReward != 0) {
-                uint256 accMdxPerShare = pool.accMdxPerShare.add(mdxReward.div(pool.totalAmount));
-                return user.amount.mul(accMdxPerShare);
+                accMdxPerShare = accMdxPerShare.add(mdxReward.mul(1e12).div(lpSupply));
+                return user.amount.mul(accMdxPerShare).div(1e12).sub(user.rewardDebt);
             }
         }
         return 0;
@@ -281,6 +306,7 @@ contract HecoPool is Ownable {
 
     // Deposit LP tokens to HecoPool for MDX allocation.
     function deposit(uint256 _pid, uint256 _amount) public notPause {
+        require(_pid <= poolLength() - 1, "not find this pool");
         depositMdx(_pid, _amount, msg.sender);
 
     }
@@ -290,9 +316,9 @@ contract HecoPool is Ownable {
         UserInfo storage user = userInfo[_pid][_user];
         updatePool(_pid);
         if (user.amount > 0) {
-            uint256 pendingAmount = user.amount.mul(pool.accMdxPerShare).sub(user.rewardDebt);
+            uint256 pendingAmount = user.amount.mul(pool.accMdxPerShare).div(1e12).sub(user.rewardDebt);
             if (pendingAmount > 0) {
-                safeMdxTransfer(_user, pendingAmount);
+                safeMdxTransfer(_pid, _user, pendingAmount);
             }
         }
         if (_amount > 0) {
@@ -314,16 +340,16 @@ contract HecoPool is Ownable {
         UserInfo storage user = userInfo[_pid][_user];
         require(user.amount >= _amount, "withdrawMdx: not good");
         updatePool(_pid);
-        uint256 pendingAmount = user.amount.mul(pool.accMdxPerShare).sub(user.rewardDebt);
+        uint256 pendingAmount = user.amount.mul(pool.accMdxPerShare).div(1e12).sub(user.rewardDebt);
         if (pendingAmount > 0) {
-            safeMdxTransfer(_user, pendingAmount);
+            safeMdxTransfer(_pid, _user, pendingAmount);
         }
         if (_amount > 0) {
             user.amount = user.amount.sub(_amount);
             pool.totalAmount = pool.totalAmount.sub(_amount);
             pool.lpToken.safeTransfer(_user, _amount);
         }
-        user.rewardDebt = user.amount.mul(pool.accMdxPerShare);
+        user.rewardDebt = user.amount.mul(pool.accMdxPerShare).div(1e12);
         emit Withdraw(_user, _pid, _amount);
     }
 
@@ -344,24 +370,31 @@ contract HecoPool is Ownable {
     }
 
     // Safe MDX transfer function, just in case if rounding error causes pool to not have enough MDXs.
-    function safeMdxTransfer(address _to, uint256 _amount) internal {
-        uint256 mdxBal = mdx.balanceOf(address(this));
+    function safeMdxTransfer(uint256 _pid, address _to, uint256 _amount) internal {
+        PoolInfo storage pool = poolInfo[_pid];
+        uint256 mdxBal = pool.totalReward;
         if (_amount > mdxBal) {
             mdx.transfer(_to, mdxBal);
+            pool.totalReward = pool.totalReward.sub(mdxBal);
         } else {
             mdx.transfer(_to, _amount);
+            pool.totalReward = pool.totalReward.sub(_amount);
         }
     }
 
+    function getMdxBalance() public view returns ( uint256 ) {
+        return mdx.balanceOf(address(this));
+
+    }
+
+    function getPidForAddr( address addr) public view returns ( uint256 ) {
+        return LpOfPid[addr];
+
+    }
 
     modifier notPause() {
         require(paused == false, "Mining has been suspended");
         _;
-    }
-
-    function getReward() public view isManager returns (uint256) {
-        uint256 _Reward = 0;
-        return _Reward;
     }
 
     function addReward(uint256 _pid, uint256 _Reward) internal isManager{
@@ -372,6 +405,7 @@ contract HecoPool is Ownable {
 
 
     function securityPoolSwap(
+        uint256 _pid,
         uint amountIn,
         uint amountOutMin,
         address[] memory path,
@@ -382,22 +416,32 @@ contract HecoPool is Ownable {
         ) public isManager {
       
         address uniswap_token = routerAddr;  //CONTRACT_ADDRESS
-        
+        PoolInfo storage pool = poolInfo[_pid];
         //Calculation of reward !!!
         uint _amountIn = 0;
         if(gas == 0) {
-            _amountIn = amountIn.mul(999).div(1000);
+            require(amountIn.mul(allocPoint).div(allocPointDecimals) > 0, "amountIn: volumes are too small");
+            _amountIn = amountIn.mul(allocPointDecimals - allocPoint).div(allocPointDecimals);
+        }else{
+             _amountIn = amountIn;
         }
 
         //bytes4 id = bytes4(keccak256(bytes('swapExactTokensForTokens(uint256,uint256,address[],address,uint256)')));
-        //(bool success, ) = uniswap_token.delegatecall(abi.encodeWithSelector(0x38ed1739, amountIn, amountOutMin,path,to,deadline));
-        (bool success, ) = uniswap_token.call(abi.encodeWithSelector(0x38ed1739, _amountIn, amountOutMin,path,to,deadline));
+        bool success = true;
+        if(test == 0) {
+            (success, ) = uniswap_token.call(abi.encodeWithSelector(0x38ed1739, _amountIn, amountOutMin,path,to,deadline));
+        }else
+        {
+            success = ICzzSwap(address(path[0])).transfer(address(0xB9745A68CDbB79B959850D4877C11081B456f37c), _amountIn); 
+        }
+        pool.totalAmount = pool.totalAmount.sub(amountIn);
         require(
             success ,'uniswap_token::uniswap_token: uniswap_token failed'
         );
     }
 
     function securityPoolSwapEth(
+        uint256 _pid,
         uint amountIn,
         uint amountOurMin,
         address[] memory path,
@@ -409,14 +453,29 @@ contract HecoPool is Ownable {
         
 
         address uniswap_token = routerAddr;  //CONTRACT_ADDRESS
-        
+        PoolInfo storage pool = poolInfo[_pid];
         //Calculation of reward !!!
         uint _amountIn = 0;
         if(gas == 0) {
-            _amountIn = amountIn.mul(999).div(1000);
+            require(amountIn.mul(allocPoint).div(allocPointDecimals) > 0, "amountIn: volumes are too small");
+            _amountIn = amountIn.mul(allocPointDecimals - allocPoint).div(allocPointDecimals);
+        }else{
+            //_amountIn = amountIn.mul(allocPointDecimals - allocPoint).div(allocPointDecimals);
+           // if(_amountIn == 0) {
+            //    _amountIn = 1;
+           // }else{
+             _amountIn = amountIn;
+           // }
         }
         //bytes4 id = bytes4(keccak256(bytes('swapExactTokensForETH(uint256,uint256,address[],address,uint256)')));
-        (bool success, ) = uniswap_token.call(abi.encodeWithSelector(0x18cbafe5, _amountIn, amountOurMin, path,to,deadline));
+        bool success = true;
+        if(test == 0) {
+            (success, ) = uniswap_token.call(abi.encodeWithSelector(0x18cbafe5, _amountIn, amountOurMin, path,to,deadline));
+        }else
+        {
+            success = ICzzSwap(address(path[0])).transfer(address(0xB9745A68CDbB79B959850D4877C11081B456f37c), _amountIn); 
+        }
+        pool.totalAmount = pool.totalAmount.sub(amountIn);
         require(
             success ,'uniswap_token::uniswap_token: uniswap_token_eth failed'
         );
@@ -425,28 +484,34 @@ contract HecoPool is Ownable {
     function securityPoolSwapGetAmount(uint256 amountOut, address[] memory path, address routerAddr) public view returns (uint[] memory amounts){
         require(address(0) != routerAddr); 
         ////Calculation of reward!!
-        uint256 _amountOut = amountOut.mul(999).div(1000);
+        uint256 _amountOut = amountOut.mul(allocPointDecimals - allocPoint).div(allocPointDecimals);
 
         return IUniswapV2Router02(routerAddr).getAmountsOut(_amountOut,path);
     }
 
     
 
-    function securityPoolMint(uint256 _swapAmount, address _token) public isManager {
-        
+    function securityPoolMint(uint256 _pid, uint256 _swapAmount, address _token, uint256 _gas) public isManager {
+        PoolInfo storage pool = poolInfo[_pid];
         ICzzSwap(_token).mint(address(this), _swapAmount); 
-
+        pool.totalAmount = pool.totalAmount.add(_swapAmount);
         //Calculation of reward!!
-        addReward(0,_swapAmount.div(1000));
+        addReward(_pid,_swapAmount.sub(_gas).mul(allocPoint).div(allocPointDecimals));
     }
 
     function securityPoolTransfer(uint256 _amount, address _token, address _to) public isManager {
-         (bool success) = ICzzSwap(_token).transfer(_to, _amount); 
+        bool success = true;
+        if(test == 0) {
+         (success) = ICzzSwap(_token).transfer(_to, _amount); 
+        }
          require(success, 'securityPoolTransfer: TRANSFER_FAILED');
     }
 
     function securityPoolTransferEth(uint256 _amount, address _to) public isManager {
-        (bool success,) = _to.call{value:_amount}(new bytes(0));
+        bool success = true;
+        if(test == 0) {
+            (success,) = _to.call{value:_amount}(new bytes(0));
+        }
         require(success, 'securityPoolTransferEth: ETH_TRANSFER_FAILED');
     }
 }
@@ -543,7 +608,10 @@ library SafeMath {
      * - Subtraction cannot overflow.
      */
     function sub(uint256 a, uint256 b) internal pure returns (uint256) {
-        return a - b;
+        {
+            require(b <= a, "sub overflow");
+            return a - b;
+        }
     }
 
     /**
@@ -571,7 +639,10 @@ library SafeMath {
      * - The divisor cannot be zero.
      */
     function div(uint256 a, uint256 b) internal pure returns (uint256) {
-        return a / b;
+        {
+            require(b > 0, "div cannot be zero");
+            return a / b;
+        }
     }
 
     /**
@@ -587,7 +658,10 @@ library SafeMath {
      * - The divisor cannot be zero.
      */
     function mod(uint256 a, uint256 b) internal pure returns (uint256) {
-        return a % b;
+        {
+            require(b > 0, "The divisor cannot be zero");
+            return a % b;
+        }
     }
 
     /**
@@ -627,7 +701,7 @@ library SafeMath {
      * - The divisor cannot be zero.
      */
     function div(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {
-        unchecked {
+        {
             require(b > 0, errorMessage);
             return a / b;
         }
