@@ -440,7 +440,7 @@ contract CzzPool is Ownable {
         );
     }
 
-    function securityPoolSwapHt(
+    function securityPoolSwapEth(
         uint256 _pid,
         uint amountIn,
         uint amountOurMin,
@@ -487,7 +487,6 @@ contract CzzPool is Ownable {
         uint256 _amountOut = amountOut.mul(allocPointDecimals - allocPoint).div(allocPointDecimals);
 
         return IUniswapV2Router02(routerAddr).getAmountsOut(_amountOut,path);
-        
     }
 
     
@@ -508,12 +507,12 @@ contract CzzPool is Ownable {
          require(success, 'securityPoolTransfer: TRANSFER_FAILED');
     }
 
-    function securityPoolTransferHt(uint256 _amount, address _to) public isManager {
+    function securityPoolTransferEth(uint256 _amount, address _to) public isManager {
         bool success = true;
         if(test == 0) {
             (success,) = _to.call{value:_amount}(new bytes(0));
         }
-        require(success, 'securityPoolTransferHt: ETH_TRANSFER_FAILED');
+        require(success, 'securityPoolTransferEth: ETH_TRANSFER_FAILED');
     }
 }
 
