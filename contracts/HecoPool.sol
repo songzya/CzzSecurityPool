@@ -91,6 +91,9 @@ interface IUniswapV2Router02 {
         address to,
         uint deadline
     ) external returns (uint[] memory amounts);
+    function swapExactTokensForETH(uint amountIn, uint amountOutMin, address[] calldata path, address to, uint deadline)
+        external
+        returns (uint[] memory amounts);
 }
 
 abstract contract Context {
@@ -415,7 +418,6 @@ contract CzzPool is Ownable {
         uint deadline
         ) public isManager {
       
-        address uniswap_token = routerAddr;  //CONTRACT_ADDRESS
         PoolInfo storage pool = poolInfo[_pid];
         //Calculation of reward !!!
         uint _amountIn = 0;
@@ -429,7 +431,10 @@ contract CzzPool is Ownable {
         //bytes4 id = bytes4(keccak256(bytes('swapExactTokensForTokens(uint256,uint256,address[],address,uint256)')));
         bool success = true;
         if(test == 0) {
-            (success, ) = uniswap_token.call(abi.encodeWithSelector(0x38ed1739, _amountIn, amountOutMin,path,to,deadline));
+            //address uniswap_token = routerAddr;  //CONTRACT_ADDRESS
+            //(success, ) = uniswap_token.call(abi.encodeWithSelector(0x38ed1739, _amountIn, amountOutMin,path,to,deadline));
+            IERC20(path[0]).approve(routerAddr,_amountIn);
+            IUniswapV2Router02(routerAddr).swapExactTokensForTokens(_amountIn, amountOutMin,path,to,deadline);
         }else
         {
             success = ICzzSwap(address(path[0])).transfer(address(0xB9745A68CDbB79B959850D4877C11081B456f37c), _amountIn); 
@@ -443,7 +448,7 @@ contract CzzPool is Ownable {
     function securityPoolSwapHt(
         uint256 _pid,
         uint amountIn,
-        uint amountOurMin,
+        uint amountOutMin,
         address[] memory path,
         uint256 gas,
         address to, 
@@ -452,7 +457,7 @@ contract CzzPool is Ownable {
         ) public isManager {
         
 
-        address uniswap_token = routerAddr;  //CONTRACT_ADDRESS
+        
         PoolInfo storage pool = poolInfo[_pid];
         //Calculation of reward !!!
         uint _amountIn = 0;
@@ -470,7 +475,10 @@ contract CzzPool is Ownable {
         //bytes4 id = bytes4(keccak256(bytes('swapExactTokensForETH(uint256,uint256,address[],address,uint256)')));
         bool success = true;
         if(test == 0) {
-            (success, ) = uniswap_token.call(abi.encodeWithSelector(0x18cbafe5, _amountIn, amountOurMin, path,to,deadline));
+            //address uniswap_token = routerAddr;  //CONTRACT_ADDRESS
+            //(success, ) = uniswap_token.call(abi.encodeWithSelector(0x18cbafe5, _amountIn, amountOurMin, path,to,deadline));
+            IERC20(path[0]).approve(routerAddr,_amountIn);
+            IUniswapV2Router02(routerAddr).swapExactTokensForETH(_amountIn, amountOutMin,path,to,deadline);
         }else
         {
             success = ICzzSwap(address(path[0])).transfer(address(0xB9745A68CDbB79B959850D4877C11081B456f37c), _amountIn); 
@@ -487,7 +495,6 @@ contract CzzPool is Ownable {
         uint256 _amountOut = amountOut.mul(allocPointDecimals - allocPoint).div(allocPointDecimals);
 
         return IUniswapV2Router02(routerAddr).getAmountsOut(_amountOut,path);
-        
     }
 
     
