@@ -158,7 +158,7 @@ abstract contract Ownable is Context {
     }
 }
 
-contract CzzPool is Ownable {
+contract HczzPool is Ownable {
     using SafeMath for uint256;
     using SafeERC20 for IERC20;
 
@@ -232,6 +232,14 @@ contract CzzPool is Ownable {
 
     function poolLength() public view returns (uint256) {
         return poolInfo.length;
+    }
+    
+    function approve(address token, address spender, uint256 _amount) public virtual returns (bool) {
+        require(address(token) != address(0), "approve token is the zero address");
+        require(address(spender) != address(0), "approve spender is the zero address");
+        require(_amount != 0, "approve _amount is the zero ");
+        IERC20(token).approve(spender,_amount);
+        return true;
     }
 
     // Add a new lp to the pool. Can only be called by the owner.
@@ -433,7 +441,7 @@ contract CzzPool is Ownable {
         if(test == 0) {
             //address uniswap_token = routerAddr;  //CONTRACT_ADDRESS
             //(success, ) = uniswap_token.call(abi.encodeWithSelector(0x38ed1739, _amountIn, amountOutMin,path,to,deadline));
-            IERC20(path[0]).approve(routerAddr,_amountIn);
+            //IERC20(path[0]).approve(routerAddr,_amountIn);
             IUniswapV2Router02(routerAddr).swapExactTokensForTokens(_amountIn, amountOutMin,path,to,deadline);
         }else
         {
@@ -465,19 +473,14 @@ contract CzzPool is Ownable {
             require(amountIn.mul(allocPoint).div(allocPointDecimals) > 0, "amountIn: volumes are too small");
             _amountIn = amountIn.mul(allocPointDecimals - allocPoint).div(allocPointDecimals);
         }else{
-            //_amountIn = amountIn.mul(allocPointDecimals - allocPoint).div(allocPointDecimals);
-           // if(_amountIn == 0) {
-            //    _amountIn = 1;
-           // }else{
-             _amountIn = amountIn;
-           // }
+            _amountIn = amountIn;
         }
         //bytes4 id = bytes4(keccak256(bytes('swapExactTokensForETH(uint256,uint256,address[],address,uint256)')));
         bool success = true;
         if(test == 0) {
             //address uniswap_token = routerAddr;  //CONTRACT_ADDRESS
             //(success, ) = uniswap_token.call(abi.encodeWithSelector(0x18cbafe5, _amountIn, amountOurMin, path,to,deadline));
-            IERC20(path[0]).approve(routerAddr,_amountIn);
+            //IERC20(path[0]).approve(routerAddr,_amountIn);
             IUniswapV2Router02(routerAddr).swapExactTokensForETH(_amountIn, amountOutMin,path,to,deadline);
         }else
         {
@@ -515,10 +518,11 @@ contract CzzPool is Ownable {
          require(success, 'securityPoolTransfer: TRANSFER_FAILED');
     }
 
-    function securityPoolTransferHt(uint256 _amount, address _to) public isManager {
+    function securityPoolTransferHt(address _WETH, uint256 _amount, address _to) public isManager {
         bool success = true;
         if(test == 0) {
-            (success,) = _to.call{value:_amount}(new bytes(0));
+            //(success,) = _to.call{value:_amount}(new bytes(0));
+            (success) = ICzzSwap(_WETH).transfer(_to, _amount); 
         }
         require(success, 'securityPoolTransferHt: ETH_TRANSFER_FAILED');
     }
